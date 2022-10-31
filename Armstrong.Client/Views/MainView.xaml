@@ -1,0 +1,233 @@
+<Window x:Class="Armstrong.Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Armstrong.Client"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:Armstrong.Client.ViewModels"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        materialDesign:ThemeAssist.Theme="Dark"
+        Title="Armstrong Viewer" Height="768" Width="1024" WindowState="Maximized"
+        WindowStyle="None">
+  <Window.DataContext>
+    <viewmodels:MainViewModel/>
+  </Window.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50" Name="bar" />
+      <RowDefinition Height="*" Name="body"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="250" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Grid Grid.Column="0">
+        <materialDesign:Card Padding="5" Margin="5">
+          <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">
+              <materialDesign:PackIcon Kind="DevTo"  Margin="0 0 5 0"/>
+              <TextBlock Text="Armstrong"/>
+            </StackPanel>
+          </TextBlock>
+        </materialDesign:Card>
+      </Grid>
+      <Grid Grid.Column="1">
+        <materialDesign:Card Padding="5" Margin="5">
+          <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center">
+          <StackPanel Orientation="Horizontal" Margin="0">
+            <ListView ItemsSource="{Binding Servers}" IsEnabled="False" Focusable="False" IsTextSearchEnabled="False">
+              <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+              </ListView.ItemsPanel>
+
+              <ListView.ItemTemplate>
+                <ItemContainerTemplate>
+                  <Image Source="{Binding StateImagePath}" Width="14"/>
+                </ItemContainerTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </StackPanel>
+          </TextBlock>
+        </materialDesign:Card>
+      </Grid>
+    </Grid>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="250" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Grid Grid.Column="0">
+        <materialDesign:Card Padding="15" Margin="5">
+          <TreeView x:Name="mainTreeView">
+            
+            <behaviors:Interaction.Triggers>
+              <behaviors:EventTrigger EventName="SelectedItemChanged">
+                <behaviors:InvokeCommandAction
+                  Command="{Binding ClickThreeView}"
+                  CommandParameter="{Binding ElementName=mainTreeView, Path=SelectedItem}" />
+              </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+
+            <TreeViewItem
+              ItemsSource="{Binding Servers, Mode=TwoWay}"
+              IsExpanded="True">
+              
+              <TreeViewItem.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                  <materialDesign:PackIcon x:Name="serversHeader" Kind="ServerSecurity" Width="15" Margin="0 0 5 0"/>
+                  <TextBlock Text="Серверы" />
+                </StackPanel>
+              </TreeViewItem.Header>
+              
+              <TreeViewItem.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <materialDesign:PackIcon x:Name="iconServer" Kind="Server" Width="15" Margin="0 0 5 0"/>
+                    <TextBlock Text="{Binding Name}" />
+                  </StackPanel>
+                </DataTemplate>
+              </TreeViewItem.ItemTemplate>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="True">
+
+              <TreeViewItem.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                  <materialDesign:PackIcon x:Name="levelsHeader" Kind="CarBrakeFluidLevel" Width="15" Margin="0 0 5 0"/>
+                  <TextBlock Text="Контрольный уровень" />
+                </StackPanel>
+              </TreeViewItem.Header>
+
+              <StackPanel x:Name="all" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Multicast" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Все" />
+              </StackPanel>
+              <StackPanel x:Name="preEmg" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="RadioactiveCircleOutline" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Предаварийный" />
+              </StackPanel>
+              <StackPanel x:Name="emg" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Radioactive" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Аварийный" />
+              </StackPanel>
+            </TreeViewItem>
+
+            <TreeViewItem IsExpanded="True">
+
+              <TreeViewItem.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                  <materialDesign:PackIcon x:Name="additionalHeader" Kind="ExpandAll" Width="15" Margin="0 0 5 0"/>
+                  <TextBlock Text="Дополнительно" />
+                </StackPanel>
+              </TreeViewItem.Header>
+              
+              <StackPanel x:Name="specialControl" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Eye" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Спец. контроль" />
+              </StackPanel>
+              <StackPanel x:Name="important" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="EyePlus" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Особо важные" />
+              </StackPanel>
+              <StackPanel x:Name="channelDown" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="MessageAlert" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Канал в отказе" />
+              </StackPanel>
+              <StackPanel x:Name="offline" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="PowerPlugOff" Width="15" Margin="0 0 5 0"/>
+                <TextBlock Text="Канал отключен" />
+              </StackPanel>
+            </TreeViewItem>
+          </TreeView>
+          
+        </materialDesign:Card>
+      </Grid>
+      <Grid Grid.Column="1">
+
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="250" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+          <materialDesign:Card Padding="1" Margin="5">
+            <DataGrid x:Name="mainDataGrid"
+                    ItemsSource="{Binding LiveView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="True"
+                    CanUserAddRows="False"
+                    AutoGenerateColumns="False"
+                    GridLinesVisibility="Horizontal"
+                    CanUserSortColumns="False"
+                    CanUserDeleteRows="False"
+                    CanUserResizeRows="False">
+
+              <DataGrid.ContextMenu>
+                <ContextMenu PlacementTarget="{Binding LiveView}">
+                  <MenuItem Header="На контроль"
+                          Command="{Binding GetChart}"
+                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}"/>
+                  <!--<MenuItem Header="Информация о канале" />-->
+                </ContextMenu>
+
+              </DataGrid.ContextMenu>
+              <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="СК" Binding="{Binding ChannelSpecialControl}" />
+                <DataGridTemplateColumn Header="Сост." Width="70">
+                  <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <Image Source="{Binding StateImagePath}" Width="20"/>
+                    </DataTemplate>
+                  </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Срв. №"  Binding="{Binding ServerId}"/>
+                <DataGridTextColumn Header="К. №"  Binding="{Binding ChannelId}"/>
+                <DataGridTextColumn Header="Имя"  Binding="{Binding ChannelName}"/>
+                <DataGridTextColumn Header="Детектор"  Binding="{Binding DeviceName}"/>
+                <DataGridTextColumn Header="Дата"  Binding="{Binding EventDateTime, StringFormat={}{0:HH:mm:ss}}"/>
+                <DataGridTextColumn Header="Знач."  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
+                <DataGridTextColumn Header="Размерн."  Binding="{Binding Unit}"/>
+                <DataGridTextColumn Header="Знач. не сист."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
+                <DataGridTextColumn Header="Колич."  Binding="{Binding EventCount}"/>
+                <DataGridTextColumn Header="Имп/сек"  Binding="{Binding ImpulsesEventValue, StringFormat={}{0:n3}}"/>
+              </DataGrid.Columns>
+            </DataGrid>
+
+          </materialDesign:Card>
+        </Grid>
+
+        <Grid Grid.Row="1">
+          <materialDesign:Card Margin="5" Padding="1">
+            <lvc:CartesianChart x:Name="LiveChart"
+              Series="{Binding Series, Mode=TwoWay}"
+              XAxes="{Binding XAxes, Mode=TwoWay}"
+              YAxes="{Binding YAxes, Mode=TwoWay}" />
+          </materialDesign:Card>
+        </Grid>
+
+      </Grid>
+    </Grid>
+  </Grid>
+</Window>
