@@ -167,8 +167,8 @@
       <Grid Grid.Column="1">
 
         <Grid.RowDefinitions>
-          <RowDefinition Height="*" />
-          <RowDefinition Height="250" />
+          <RowDefinition Height="{Binding GridHeight}" />
+          <RowDefinition Height="{Binding ChartHeight}" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -189,7 +189,9 @@
                   <MenuItem Header="На контроль"
                           Command="{Binding GetChart}"
                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}"/>
-                  <!--<MenuItem Header="Информация о канале" />-->
+                  <MenuItem Header="График за сутки" 
+                            Command="{Binding GetDayChart}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}"/>
                 </ContextMenu>
 
               </DataGrid.ContextMenu>
@@ -219,14 +221,97 @@
         </Grid>
 
         <Grid Grid.Row="1">
-          <materialDesign:Card Margin="5" Padding="1">
-            <lvc:CartesianChart x:Name="LiveChart"
-              Series="{Binding Series, Mode=TwoWay}"
-              XAxes="{Binding XAxes, Mode=TwoWay}"
-              YAxes="{Binding YAxes, Mode=TwoWay}" />
-          </materialDesign:Card>
-        </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <materialDesign:Card Margin="5" Padding="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid Grid.Column="0">
+                            <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Update" 
+                                                         Height="25" 
+                                                         Width="25"/>
+                                <TextBlock Text=" : " FontSize="25" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"/>
+                                <Image Source="{Binding IsWatched}" Width="25"/>
+                                
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center">
+                                <TextBlock Margin="0 0 5 0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="SmokeDetectorVariant"
+                                                             Height="25"
+                                                             Width="25"/>
+                                </TextBlock>
+                                <TextBlock Text="Точка контроля: " 
+                                           FontSize="20"/>
+                                <TextBlock Text="{Binding SelectedChannelName}"
+                                           FontSize="20"/>
+                            </StackPanel>
+                        </Grid>
 
+                        <Grid Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Width="25" 
+                                        Height="25" 
+                                        Margin="5" 
+                                        Padding="0" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Background="#FF424242"
+                                        BorderBrush="#FF303030"
+                                        Command="{Binding MaximizeClick}">
+                                    <materialDesign:PackIcon 
+                                        x:Name="maximize" 
+                                        Kind="ArrowExpand" 
+                                        Height="20" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                </Button>
+                                <Button Width="25" 
+                                        Height="25" 
+                                        Margin="5" 
+                                        Padding="0" 
+                                        HorizontalAlignment="Center"
+                                        Background="#FF424242"
+                                        BorderBrush="#FF303030"
+                                        Command="{Binding MinimazeClick}">
+                                    <materialDesign:PackIcon 
+                                        x:Name="minimaze" 
+                                        Kind="ArrowCollapse"
+                                        Height="20" 
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+            <Grid Grid.Row="1">
+                <materialDesign:Card Margin="5" Padding="1">
+                    <lvc:CartesianChart x:Name="myChart"
+                        Series="{Binding Series, Mode=TwoWay}"
+                        XAxes="{Binding XAxes, Mode=TwoWay}"
+                        YAxes="{Binding YAxes, Mode=TwoWay}" 
+                        ZoomMode="{Binding SizeMode}" />  
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
       </Grid>
     </Grid>
   </Grid>
