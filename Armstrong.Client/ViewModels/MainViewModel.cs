@@ -1,12 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using Armstrong.Client.Commands;
 using Armstrong.Client.Constants;
 using Armstrong.Client.Data;
@@ -18,6 +9,16 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Microsoft.EntityFrameworkCore;
 using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Armstrong.Client.ViewModels
 {
@@ -30,11 +31,11 @@ namespace Armstrong.Client.ViewModels
         public ObservableCollection<DateTimePoint> PointsCollection { get; set; } = new();
         public ObservableCollection<ISeries> Series
         {
-            get => this._series;
+            get => _series;
             set
             {
-                this._series = value;
-                this.OnPropertyChanged();
+                _series = value;
+                OnPropertyChanged();
             }
         }
         public ObservableCollection<Server> Servers { get; set; } = new();
@@ -63,26 +64,26 @@ namespace Armstrong.Client.ViewModels
                 LabelsPaint = new SolidColorPaint(SKColors.White)
             }
         };
-        
+
         public List<Channel> SelectedChannels { get; set; } = new();
         public List<int> ServerIds
         {
-            get => this._serverIds;
+            get => _serverIds;
             set
             {
-                this._serverIds = value;
-                this.OnPropertyChanged();
+                _serverIds = value;
+                OnPropertyChanged();
             }
         }
 
         private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
         public LiveChartsCore.Measure.ZoomAndPanMode SizeMode
         {
-            get => this._sizeMode;
+            get => _sizeMode;
             set
             {
-                this._sizeMode = value;
-                this.OnPropertyChanged();
+                _sizeMode = value;
+                OnPropertyChanged();
             }
         }
 
@@ -90,11 +91,11 @@ namespace Armstrong.Client.ViewModels
 
         public GridLength GridHeight
         {
-            get => this._gridHeight;
+            get => _gridHeight;
             set
             {
-                this._gridHeight = value;
-                this.OnPropertyChanged();
+                _gridHeight = value;
+                OnPropertyChanged();
             }
         }
 
@@ -102,11 +103,11 @@ namespace Armstrong.Client.ViewModels
 
         public GridLength ChartHeight
         {
-            get => this._chartHeight;
+            get => _chartHeight;
             set
             {
-                this._chartHeight = value;
-                this.OnPropertyChanged();
+                _chartHeight = value;
+                OnPropertyChanged();
             }
         }
 
@@ -114,26 +115,29 @@ namespace Armstrong.Client.ViewModels
 
         public string SelectedChannelName
         {
-            get => this._selectedChannelName;
+            get => _selectedChannelName;
             set
             {
-                this._selectedChannelName = value;
-                this.OnPropertyChanged();
+                _selectedChannelName = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _isWatched;
+        private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
+        private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
+        private SolidColorBrush _DefaultColorBrush => new(Color.FromRgb(230, 230, 230));
 
-        public string IsWatched
+        private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
+
+        public Brush UpdateStatusIconColor
         {
-            get => this._isWatched;
+            get => _updateStatusIconColor;
             set
             {
-                this._isWatched = value;
-                this.OnPropertyChanged();
+                _updateStatusIconColor = value;
+                OnPropertyChanged();
             }
         }
-
 
         public ICollectionView View { get; set; }
         public ICollectionViewLiveShaping LiveView { get; set; }
@@ -142,12 +146,14 @@ namespace Armstrong.Client.ViewModels
             new Predicate<object>(item => ((Channel)item).ServerId is not ChannelState.Untracked);
 
 
-        public System.Timers.Timer MainViewUpdateTimer { get; set; } = new() {
+        public System.Timers.Timer MainViewUpdateTimer { get; set; } = new()
+        {
             Enabled = true,
             Interval = 10000,
             AutoReset = true
         };
-        public System.Timers.Timer ChartUpdateTimer { get; set; } = new() {
+        public System.Timers.Timer ChartUpdateTimer { get; set; } = new()
+        {
             Enabled = true,
             Interval = 20000,
             AutoReset = true
@@ -155,45 +161,39 @@ namespace Armstrong.Client.ViewModels
 
         public MainViewModel()
         {
-            this.ChartUpdateTimer.Elapsed += this.ChartUpdateTimerElapsed;
-            this.MainViewUpdateTimer.Elapsed += this.MainViewUpdateTimerElapsed;
+            ChartUpdateTimer.Elapsed += ChartUpdateTimerElapsed;
+            MainViewUpdateTimer.Elapsed += MainViewUpdateTimerElapsed;
 
-            this.Channels = GetChannels();
-            this.ServerIds = GetServerIds();
-            this.Servers = GetServers();
-            this.Series = GetChartSeries();
+            Channels = GetChannels();
+            ServerIds = GetServerIds();
+            Servers = GetServers();
+            Series = GetChartSeries();
 
-            this.View = CollectionViewSource.GetDefaultView(this.Channels);
-            this.View.Filter = this.Filter;
+            View = CollectionViewSource.GetDefaultView(Channels);
+            View.Filter = Filter;
 
-            this.LiveView = this.View as ICollectionViewLiveShaping;
-            this.LiveView.LiveFilteringProperties.Add(nameof(Channel.ChannelState));
-            this.LiveView.IsLiveFiltering = true;
+            LiveView = View as ICollectionViewLiveShaping;
+            LiveView.LiveFilteringProperties.Add(nameof(Channel.ChannelState));
+            LiveView.IsLiveFiltering = true;
 
-            this.IsWatched = ImagePath.Offline;
-
-            this.MainViewUpdateTimer.Start();
+            MainViewUpdateTimer.Start();
         }
 
         private void ChartUpdateTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            this.SetLineSeriesPoints(isWatching: true);
+            SetLineSeriesPoints(isWatching: true);
         }
 
         private void MainViewUpdateTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            this.ChannelsUpdate();
-            this.ServersIndicationUpdate();
+            ChannelsUpdate();
+            ServersIndicationUpdate();
         }
 
         private void ApplyFilter(Predicate<object> filter, bool isLiveFiltering)
         {
-            this.View.Filter = filter;
-
-            if (isLiveFiltering)
-                this.LiveView.IsLiveFiltering = true;
-            else
-                this.LiveView.IsLiveFiltering = false;
+            View.Filter = filter;
+            LiveView.IsLiveFiltering = isLiveFiltering;
         }
 
         private void ChannelsUpdate()
@@ -203,7 +203,7 @@ namespace Armstrong.Client.ViewModels
 
             foreach (var channelFromDb in fetchedChannels)
             {
-                var channel = this.Channels.FirstOrDefault(c => c.Id == channelFromDb.Id);
+                var channel = Channels.FirstOrDefault(c => c.Id == channelFromDb.Id);
 
                 if (channel != null)
                 {
@@ -228,9 +228,9 @@ namespace Armstrong.Client.ViewModels
                 new LineSeries<DateTimePoint>
                 {
                     GeometrySize = 0.1,
-                    Values = this.PointsCollection,
+                    Values = PointsCollection,
                     TooltipLabelFormatter = (chartPoint)
-                        => $"Name: {this.SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                        => $"Name: {SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
                 }
             };
         }
@@ -239,28 +239,36 @@ namespace Armstrong.Client.ViewModels
         {
             var servers = new ObservableCollection<Server>();
 
-            if (this.ServerIds.Any())
-                foreach (var id in this.ServerIds)
+            if (ServerIds.Any())
+            {
+                foreach (var id in ServerIds)
+                {
                     servers.Add(new Server(id));
+                }
+            }
 
             return servers;
         }
 
         private List<int> GetServerIds()
         {
-            if (this.Channels.Any())
-                return new List<int>(this.ServerIds = this.Channels.Select(x => x.ServerId)
+            if (Channels.Any())
+            {
+                return new List<int>(ServerIds = Channels.Select(x => x.ServerId)
                                                                    .Distinct()
                                                                    .ToList());
+            }
             else
+            {
                 return new List<int>();
+            }
         }
 
         private void ServersIndicationUpdate()
         {
-            foreach (var server in this.Servers)
+            foreach (var server in Servers)
             {
-                var lastUpdateTime = this.Channels.Where(c => c.ServerId == server.Id)
+                var lastUpdateTime = Channels.Where(c => c.ServerId == server.Id)
                                                   .Select(x => x.EventDateTime)
                                                   .ToList();
 
@@ -296,7 +304,7 @@ namespace Armstrong.Client.ViewModels
 
         private void SetLineSeriesPoints(bool isWatching)
         {
-            if (this.SelectedChannels.Any())
+            if (SelectedChannels.Any())
             {
                 using (var context = new DataContext())
                 {
@@ -306,25 +314,29 @@ namespace Armstrong.Client.ViewModels
                     startDate = isWatching ? DateTime.UtcNow.AddHours(-1) : DateTime.UtcNow.AddDays(-1);
 
                     var histories = context.Histories.AsNoTracking()
-                                                   .Where(x => x.Id == this.SelectedChannels.Select(x => x.Id).FirstOrDefault())
+                                                   .Where(x => x.Id == SelectedChannels.Select(x => x.Id).FirstOrDefault())
                                                    .Where(d => d.EventDate > startDate)
                                                    .OrderBy(x => x.EventDate)
                                                    .ToList();
-                    this.PointsCollection.Clear();
+                    PointsCollection.Clear();
 
 
                     if (histories.Count > pointsLimit && !isWatching)
                     {
                         var avgHistory = GetAvgHistory(histories);
                         foreach (var history in avgHistory)
-                            this.PointsCollection.Add(new DateTimePoint(history.EventDate,
+                        {
+                            PointsCollection.Add(new DateTimePoint(history.EventDate,
                                                                         history.SystemEventValue));
+                        }
                     }
                     else
                     {
                         foreach (var history in histories)
-                            this.PointsCollection.Add(new DateTimePoint(history.EventDate,
+                        {
+                            PointsCollection.Add(new DateTimePoint(history.EventDate,
                                                                         history.SystemEventValue));
+                        }
                     }
                 }
             }
@@ -339,7 +351,9 @@ namespace Armstrong.Client.ViewModels
             foreach (var hist in histories)
             {
                 if (seporator >= tempHistories.Count)
+                {
                     tempHistories.Add(new() { SystemEventValue = hist.SystemEventValue, EventDate = hist.EventDate });
+                }
                 else
                 {
                     avgHistory.Add(new History()
@@ -361,7 +375,9 @@ namespace Armstrong.Client.ViewModels
             double temp = 0D;
 
             for (int i = 0; i < count; i++)
+            {
                 temp += dates[i].Ticks / (double)count;
+            }
 
             return new DateTime((long)temp);
         }
@@ -382,7 +398,7 @@ namespace Armstrong.Client.ViewModels
         {
             public const string All = "all";
             public const string Warning = "preEmg";
-            public const string Danger  = "emg";
+            public const string Danger = "emg";
             public const string SpecialControl = "specialControl";
             public const string Important = "important";
             public const string ChannelDown = "channelDown";
@@ -412,17 +428,17 @@ namespace Armstrong.Client.ViewModels
                 {
                     ICollection<Object> channels = (ICollection<Object>)obj;
 
-                    this.SelectedChannels.Clear();
+                    SelectedChannels.Clear();
 
                     foreach (Channel channel in channels)
                     {
-                        this.SelectedChannels.Add(channel);
+                        SelectedChannels.Add(channel);
                     }
 
-                    this.SelectedChannelName = this.SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
-                    this.IsWatched = ImagePath.Normal;
-                    this.SetLineSeriesPoints(isWatching: true);
-                    this.ChartUpdateTimer.Start();
+                    SelectedChannelName = SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
+                    UpdateStatusIconColor = _GrinColorBrush;
+                    SetLineSeriesPoints(isWatching: true);
+                    ChartUpdateTimer.Start();
                 });
             }
         }
@@ -435,17 +451,17 @@ namespace Armstrong.Client.ViewModels
                 {
                     ICollection<Object> channels = (ICollection<Object>)obj;
 
-                    this.SelectedChannels.Clear();
+                    SelectedChannels.Clear();
 
                     foreach (Channel channel in channels)
                     {
-                        this.SelectedChannels.Add(channel);
+                        SelectedChannels.Add(channel);
                     }
 
-                    this.SelectedChannelName = this.SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
-                    this.IsWatched = ImagePath.Danger;
-                    this.ChartUpdateTimer.Stop();
-                    this.SetLineSeriesPoints(isWatching: false);
+                    SelectedChannelName = SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
+                    UpdateStatusIconColor = _RedColorBrush;
+                    ChartUpdateTimer.Stop();
+                    SetLineSeriesPoints(isWatching: false);
                 });
             }
         }
@@ -484,7 +500,7 @@ namespace Armstrong.Client.ViewModels
                     {
                         var selectedNode = (Server)obj;
                         Predicate<object> predicate = new(item => ((Channel)item).ServerId == selectedNode.Id);
-                        this.ApplyFilter(predicate, false);
+                        ApplyFilter(predicate, false);
                     }
                     if (obj.GetType() == typeof(StackPanel))
                     {
@@ -493,25 +509,25 @@ namespace Armstrong.Client.ViewModels
                         switch (stackPannel.Name)
                         {
                             case FilterNodeName.All:
-                                this.ApplyFilter(FilterPredicate.Normal, isLiveFiltering: false);
+                                ApplyFilter(FilterPredicate.Normal, isLiveFiltering: false);
                                 break;
                             case FilterNodeName.Warning:
-                                this.ApplyFilter(FilterPredicate.Warning, isLiveFiltering: true);
+                                ApplyFilter(FilterPredicate.Warning, isLiveFiltering: true);
                                 break;
                             case FilterNodeName.Danger:
-                                this.ApplyFilter(FilterPredicate.Danger, isLiveFiltering: true);
+                                ApplyFilter(FilterPredicate.Danger, isLiveFiltering: true);
                                 break;
                             case FilterNodeName.SpecialControl:
-                                this.ApplyFilter(FilterPredicate.SpecialControl, isLiveFiltering: true);
+                                ApplyFilter(FilterPredicate.SpecialControl, isLiveFiltering: true);
                                 break;
                             case FilterNodeName.Important:
                                 // TODO, add in database column and impl. props
                                 break;
                             case FilterNodeName.ChannelDown:
-                                this.ApplyFilter(FilterPredicate.ChannelDown, isLiveFiltering: true);
+                                ApplyFilter(FilterPredicate.ChannelDown, isLiveFiltering: true);
                                 break;
                             case FilterNodeName.ChannelOffline:
-                                this.ApplyFilter(FilterPredicate.ChannelOffline, isLiveFiltering: true);
+                                ApplyFilter(FilterPredicate.ChannelOffline, isLiveFiltering: true);
                                 break;
                         }
                     }

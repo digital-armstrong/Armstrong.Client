@@ -221,97 +221,58 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <materialDesign:Card Margin="5" Padding="1">
+        <materialDesign:Card Margin="5" Padding="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <Grid Grid.Column="0">
                             <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <materialDesign:PackIcon Kind="Update" 
-                                                         Height="25" 
-                                                         Width="25"/>
-                                <TextBlock Text=" : " FontSize="25" 
-                                           HorizontalAlignment="Center" 
-                                           VerticalAlignment="Center"/>
-                                <Image Source="{Binding IsWatched}" Width="25"/>
-                                
+                                            <materialDesign:PackIcon Kind="Update" Height="15" Width="15"  Foreground="{Binding UpdateStatusIconColor}"/>
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <StackPanel Orientation="Horizontal" 
-                                        HorizontalAlignment="Center" 
-                                        VerticalAlignment="Center">
-                                <TextBlock Margin="0 0 5 0"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                                    <materialDesign:PackIcon Kind="SmokeDetectorVariant"
-                                                             Height="25"
-                                                             Width="25"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="SmokeDetectorVariant" Height="15" Width="15"/>
                                 </TextBlock>
-                                <TextBlock Text="Точка контроля: " 
-                                           FontSize="20"/>
-                                <TextBlock Text="{Binding SelectedChannelName}"
-                                           FontSize="20"/>
+                                <TextBlock Text="Точка контроля: " FontSize="13"/>
+                                <TextBlock Text="{Binding SelectedChannelName}" FontSize="13"/>
                             </StackPanel>
                         </Grid>
 
                         <Grid Grid.Column="2">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button Width="25" 
-                                        Height="25" 
-                                        Margin="5" 
-                                        Padding="0" 
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="#FF424242"
-                                        BorderBrush="#FF303030"
-                                        Command="{Binding MaximizeClick}">
-                                    <materialDesign:PackIcon 
-                                        x:Name="maximize" 
-                                        Kind="ArrowExpand" 
-                                        Height="20" 
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center" />
+                                <Button Width="20" Height="20" BorderThickness="0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Margin="5" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF424242" BorderBrush="#FF303030" Command="{Binding MaximizeClick}">
+                                    <materialDesign:PackIcon x:Name="maximize" Kind="ArrowExpand" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
-                                <Button Width="25" 
-                                        Height="25" 
-                                        Margin="5" 
-                                        Padding="0" 
-                                        HorizontalAlignment="Center"
-                                        Background="#FF424242"
-                                        BorderBrush="#FF303030"
-                                        Command="{Binding MinimazeClick}">
-                                    <materialDesign:PackIcon 
-                                        x:Name="minimaze" 
-                                        Kind="ArrowCollapse"
-                                        Height="20" 
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center" />
+                                            <Button Width="20" Height="20" BorderThickness="0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Margin="5" Padding="0" HorizontalAlignment="Center" Background="#FF424242" BorderBrush="#FF303030" Command="{Binding MinimazeClick}">
+                                    <materialDesign:PackIcon x:Name="minimaze" Kind="ArrowCollapse" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
                             </StackPanel>
                         </Grid>
                     </Grid>
-                </materialDesign:Card>
-            </Grid>
-            <Grid Grid.Row="1">
-                <materialDesign:Card Margin="5" Padding="1">
+                </Grid>
+                <Grid Grid.Row="1">
                     <lvc:CartesianChart x:Name="myChart"
-                        Series="{Binding Series, Mode=TwoWay}"
-                        XAxes="{Binding XAxes, Mode=TwoWay}"
-                        YAxes="{Binding YAxes, Mode=TwoWay}" 
-                        ZoomMode="{Binding SizeMode}" />  
-                </materialDesign:Card>
+                    Series="{Binding Series, Mode=TwoWay}"
+                    XAxes="{Binding XAxes, Mode=TwoWay}"
+                    YAxes="{Binding YAxes, Mode=TwoWay}" 
+                    ZoomMode="{Binding SizeMode}" />
+                </Grid>
             </Grid>
-        </Grid>
+        </materialDesign:Card>
+    </Grid>
       </Grid>
     </Grid>
   </Grid>
