@@ -1,6 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Armstrong.Client.Models;
 using Armstrong.Client.Helpers;
+using Armstrong.Client.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Armstrong.Client.Data
 {
@@ -26,6 +27,9 @@ namespace Armstrong.Client.Data
 
             options.UseNpgsql(connectionStringBuilder.ConnectionString,
                 options => options.EnableRetryOnFailure(maxRetryCount: 100));
+
+            options.EnableSensitiveDataLogging();
+            options.LogTo(message => Debug.WriteLine(message));
         }
     }
 }
