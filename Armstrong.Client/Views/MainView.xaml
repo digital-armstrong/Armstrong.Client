@@ -80,89 +80,102 @@
 
       <Grid Grid.Column="0">
         <materialDesign:Card Padding="15" Margin="5">
-          <TreeView x:Name="mainTreeView">
-            
-            <behaviors:Interaction.Triggers>
-              <behaviors:EventTrigger EventName="SelectedItemChanged">
-                <behaviors:InvokeCommandAction
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <TreeView x:Name="mainTreeView">
+
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="SelectedItemChanged">
+                                        <behaviors:InvokeCommandAction
                   Command="{Binding ClickThreeView}"
                   CommandParameter="{Binding ElementName=mainTreeView, Path=SelectedItem}" />
-              </behaviors:EventTrigger>
-            </behaviors:Interaction.Triggers>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
 
-            <TreeViewItem
+                                <TreeViewItem
               ItemsSource="{Binding Servers, Mode=TwoWay}"
               IsExpanded="True">
-              
-              <TreeViewItem.Header>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                  <materialDesign:PackIcon x:Name="serversHeader" Kind="ServerSecurity" Width="15" Margin="0 0 5 0"/>
-                  <TextBlock Text="Серверы" />
-                </StackPanel>
-              </TreeViewItem.Header>
-              
-              <TreeViewItem.ItemTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <materialDesign:PackIcon x:Name="iconServer" Kind="Server" Width="15" Margin="0 0 5 0"/>
-                    <TextBlock Text="{Binding Name}" />
-                  </StackPanel>
-                </DataTemplate>
-              </TreeViewItem.ItemTemplate>
-            </TreeViewItem>
 
-            <TreeViewItem IsExpanded="True">
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="serversHeader" Kind="ServerSecurity" Width="15" Margin="0 0 5 0"/>
+                                            <TextBlock Text="Серверы" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
 
-              <TreeViewItem.Header>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                  <materialDesign:PackIcon x:Name="levelsHeader" Kind="CarBrakeFluidLevel" Width="15" Margin="0 0 5 0"/>
-                  <TextBlock Text="Контрольный уровень" />
-                </StackPanel>
-              </TreeViewItem.Header>
+                                    <TreeViewItem.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <materialDesign:PackIcon x:Name="iconServer" Kind="Server" Width="15" Margin="0 0 5 0"/>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </TreeViewItem.ItemTemplate>
+                                </TreeViewItem>
 
-              <StackPanel x:Name="all" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Multicast" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Все" />
-              </StackPanel>
-              <StackPanel x:Name="preEmg" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="RadioactiveCircleOutline" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Предаварийный" />
-              </StackPanel>
-              <StackPanel x:Name="emg" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Radioactive" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Аварийный" />
-              </StackPanel>
-            </TreeViewItem>
+                                <TreeViewItem IsExpanded="True">
 
-            <TreeViewItem IsExpanded="True">
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="levelsHeader" Kind="CarBrakeFluidLevel" Width="15" Margin="0 0 5 0"/>
+                                            <TextBlock Text="Контрольный уровень" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
 
-              <TreeViewItem.Header>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                  <materialDesign:PackIcon x:Name="additionalHeader" Kind="ExpandAll" Width="15" Margin="0 0 5 0"/>
-                  <TextBlock Text="Дополнительно" />
-                </StackPanel>
-              </TreeViewItem.Header>
-              
-              <StackPanel x:Name="specialControl" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Eye" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Спец. контроль" />
-              </StackPanel>
-              <StackPanel x:Name="important" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="EyePlus" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Особо важные" />
-              </StackPanel>
-              <StackPanel x:Name="channelDown" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="MessageAlert" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Канал в отказе" />
-              </StackPanel>
-              <StackPanel x:Name="offline" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="PowerPlugOff" Width="15" Margin="0 0 5 0"/>
-                <TextBlock Text="Канал отключен" />
-              </StackPanel>
-            </TreeViewItem>
-          </TreeView>
-          
-        </materialDesign:Card>
+                                    <StackPanel x:Name="all" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Multicast" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Все" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="preEmg" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="RadioactiveCircleOutline" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Предаварийный" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="emg" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Radioactive" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Аварийный" />
+                                    </StackPanel>
+                                </TreeViewItem>
+
+                                <TreeViewItem IsExpanded="True">
+
+                                    <TreeViewItem.Header>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="additionalHeader" Kind="ExpandAll" Width="15" Margin="0 0 5 0"/>
+                                            <TextBlock Text="Дополнительно" />
+                                        </StackPanel>
+                                    </TreeViewItem.Header>
+
+                                    <StackPanel x:Name="specialControl" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Eye" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Спец. контроль" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="important" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="EyePlus" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Особо важные" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="channelDown" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="MessageAlert" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Канал в отказе" />
+                                    </StackPanel>
+                                    <StackPanel x:Name="offline" Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="PowerPlugOff" Width="15" Margin="0 0 5 0"/>
+                                        <TextBlock Text="Канал отключен" />
+                                    </StackPanel>
+                                </TreeViewItem>
+                            </TreeView>
+                        </Grid>
+
+                        <Grid Grid.Row="1" >
+                            <Button x:Name="GetReport" Command="{Binding ShowTimeSelector}" Content="Отчет" Background="#FF424242" BorderBrush="#FF303030"/>
+                        </Grid>
+                    </Grid>
+
+                </materialDesign:Card>
       </Grid>
       <Grid Grid.Column="1">
 
@@ -188,13 +201,16 @@
                 <ContextMenu PlacementTarget="{Binding LiveView}">
                   <MenuItem Header="На контроль"
                           Command="{Binding GetChart}"
-                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}"/>
+                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
                   <MenuItem Header="График за сутки" 
                             Command="{Binding GetDayChart}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}"/>
-                </ContextMenu>
-
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                                    <MenuItem Header="График за дату"
+                            Command="{Binding GetDateTimePicker}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                                </ContextMenu>
               </DataGrid.ContextMenu>
+                
               <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="СК" Binding="{Binding ChannelSpecialControl}" />
                 <DataGridTemplateColumn Header="Сост." Width="70">

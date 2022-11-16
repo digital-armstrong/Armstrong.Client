@@ -3,6 +3,7 @@ using Armstrong.Client.Constants;
 using Armstrong.Client.Data;
 using Armstrong.Client.Models;
 using Armstrong.Client.Repository;
+using Armstrong.Client.Views;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -24,8 +25,29 @@ namespace Armstrong.Client.ViewModels
 {
     public class MainViewModel : NotifyPropertyChanged
     {
+        private GridLength _chartHeight = new(300);
+        private GridLength _gridHeight = new(1, GridUnitType.Star);
         private ObservableCollection<ISeries> _series;
         private List<int> _serverIds;
+        private string _selectedChannelName;
+        private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
+        private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
+        private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
+        private SolidColorBrush _DefaultColorBrush => new(Color.FromRgb(230, 230, 230));
+        private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
+
+
+        private ObservableCollection<Report> _reports = new();
+
+        public ObservableCollection<Report> Reports
+        {
+            get { return _reports; }
+            set
+            {
+                _reports = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Channel> Channels { get; set; }
         public ObservableCollection<DateTimePoint> PointsCollection { get; set; } = new();
@@ -76,7 +98,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
         public LiveChartsCore.Measure.ZoomAndPanMode SizeMode
         {
             get => _sizeMode;
@@ -86,8 +107,6 @@ namespace Armstrong.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private GridLength _gridHeight = new(1, GridUnitType.Star);
 
         public GridLength GridHeight
         {
@@ -99,8 +118,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private GridLength _chartHeight = new(300);
-
         public GridLength ChartHeight
         {
             get => _chartHeight;
@@ -111,8 +128,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private string _selectedChannelName;
-
         public string SelectedChannelName
         {
             get => _selectedChannelName;
@@ -122,12 +137,6 @@ namespace Armstrong.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
-        private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
-        private SolidColorBrush _DefaultColorBrush => new(Color.FromRgb(230, 230, 230));
-
-        private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
 
         public Brush UpdateStatusIconColor
         {
@@ -478,6 +487,18 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
+        public ICommand ShowTimeSelector
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    TimeSelectorView timeSelector = new TimeSelectorView();
+                    timeSelector.Show();
+                });
+            }
+        }
+
         public ICommand MinimazeClick
         {
             get
@@ -486,6 +507,29 @@ namespace Armstrong.Client.ViewModels
                 {
                     GridHeight = new(1, GridUnitType.Star);
                     ChartHeight = new(300);
+                });
+            }
+        }
+
+        public ICommand GetDateTimePicker
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    DateTimePickerView dateTimePicker = new DateTimePickerView();
+                    dateTimePicker.Show();
+                });
+            }
+        }
+
+        public ICommand RenderChart
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+
                 });
             }
         }
