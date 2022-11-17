@@ -22,8 +22,8 @@ namespace Armstrong.Client.ViewModels
     {
         private DateTime? _startDate = DateTime.Now.Date.AddDays(-1);
         private DateTime? _endDate = DateTime.Now.Date;
-        private DateTime? _startTime = new();
-        private DateTime? _endTime = new();
+        private DateTime? _startTime = DateTime.Now;
+        private DateTime? _endTime = DateTime.Now;
 
         public DateTime? StartDate
         {

@@ -55,7 +55,7 @@
                         Margin="5 5 10 5" Padding="0" 
                         HorizontalAlignment="Right" 
                         VerticalAlignment="Center" 
-                        Background="#FF424242" 
+                        Background="#EB5757" 
                         BorderBrush="#FF303030" 
                         Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=DateTimePickerWindow}">
                     <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -78,10 +78,12 @@
                                     FirstDayOfWeek="Monday"
                                     materialDesign:HintAssist.Hint="Выберите дату"
                                     materialDesign:HintAssist.HelperText="Дата начала отсчета"
+                                    InputScope="Date"
                                     Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                     SelectedDate="{Binding StartDate}"/>
                         <materialDesign:TimePicker Margin="5" 
                                                    Is24Hours="True" 
+                                                   InputScope="Time"
                                                    materialDesign:HintAssist.Hint="Выберите время"
                                                    materialDesign:HintAssist.HelperText="Время начала отсчета"
                                                    Style="{StaticResource MaterialDesignOutlinedTimePicker}"
@@ -98,12 +100,14 @@
                                     FirstDayOfWeek="Monday"
                                     materialDesign:HintAssist.Hint="Выберите дату"
                                     materialDesign:HintAssist.HelperText="Дата окончания отсчета"
+                                    InputScope="Date"
                                     Style="{StaticResource MaterialDesignOutlinedDatePicker}"
                                     SelectedDate="{Binding EndDate}"/>
                         <materialDesign:TimePicker Margin="5" 
                                                    Is24Hours="True"
                                                    materialDesign:HintAssist.Hint="Выберите время"
                                                    materialDesign:HintAssist.HelperText="Время окончания отсчета"
+                                                   InputScope="Time"
                                                    Style="{StaticResource MaterialDesignOutlinedTimePicker}"
                                                    SelectedTime="{Binding EndTime}"/>
                     </StackPanel>
@@ -122,7 +126,8 @@
                     VerticalAlignment="Center" 
                     Background="#FF424242" 
                     BorderBrush="#FF303030" 
-                    Command="{Binding GetChart}">
+                    Command="{Binding GetChart}"
+                    CommandParameter="{Binding ElementName=DateTimePickerWindow}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <materialDesign:PackIcon Width="20" 
                                              Height="20"

@@ -51,9 +51,10 @@
                         Margin="5 5 10 5" Padding="0" 
                         HorizontalAlignment="Right" 
                         VerticalAlignment="Center" 
-                        Background="#FF424242" 
+                        Background="#EB5757" 
                         BorderBrush="#FF303030" 
-                        Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ChartViewWindow}">
+                        Command="{Binding CloseWindow}" 
+                        CommandParameter="{Binding ElementName=ChartViewWindow}">
                     <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Button>
             </Grid>
@@ -64,7 +65,7 @@
                         Series="{Binding SeriesBindigCollection}"
                         XAxes="{Binding XAxesBindingCollection}"
                         YAxes="{Binding YAxesBindingCollection}"
-                        ZoomMode="None" />
+                        ZoomMode="Both" />
         </Grid>
     </Grid>
 </Window>

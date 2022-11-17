@@ -16,7 +16,10 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         materialDesign:ThemeAssist.Theme="Dark"
-        Title="ReportView" Height="800" Width="1000" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="ReportView" 
+        Height="800" Width="1000" 
+        WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        BorderBrush="#FF424242" BorderThickness="2">
     <Window.DataContext>
         <viewmodels:ReportViewModel />
     </Window.DataContext>
@@ -34,19 +37,31 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button Width="50" Height="30" BorderThickness="0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Margin="5" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF424242" BorderBrush="#FF303030" Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ReportWindow}">
-                        <materialDesign:PackIcon x:Name="back" Kind="ArrowBack" Height="25" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Button>
+            <Grid Grid.Column="0"></Grid>
+
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="MathCompass" Height="17" Width="17"/>
+                    </TextBlock>
+                    <TextBlock Text="Отчет" FontSize="16"/>
                 </StackPanel>
             </Grid>
-            
-            <Grid Grid.Column="1">
-                
-            </Grid>
 
-            <Grid Grid.Column="2"></Grid>
+            <Grid Grid.Column="2">
+                <Button Width="20" 
+                        Height="20" 
+                        BorderThickness="0" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                        Margin="5 5 10 5" Padding="0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" 
+                        Background="#EB5757" 
+                        BorderBrush="#FF303030" 
+                        Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ReportWindow}">
+                    <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
