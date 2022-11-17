@@ -3,6 +3,7 @@ using Armstrong.Client.Constants;
 using Armstrong.Client.Data;
 using Armstrong.Client.Models;
 using Armstrong.Client.Repository;
+using Armstrong.Client.Utilits;
 using Armstrong.Client.Views;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -511,12 +512,24 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
+        public ObservableCollection<Channel> SelectedChannelBindingCollection { get; set; }
+
         public ICommand GetDateTimePicker
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
+                    ICollection<Object> channels = (ICollection<Object>)obj;
+
+                    SelectedChannelBindingCollection = ChartCollectionSingleton.GetInstance().SelectedChannelsCollection;
+                    SelectedChannelBindingCollection.Clear();
+
+                    foreach (Channel _channel in channels)
+                    {
+                        SelectedChannelBindingCollection.Add(_channel);
+                    }
+
                     DateTimePickerView dateTimePicker = new DateTimePickerView();
                     dateTimePicker.Show();
                 });

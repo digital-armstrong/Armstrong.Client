@@ -1,16 +1,141 @@
 ﻿<Window x:Class="Armstrong.Client.Views.DateTimePickerView"
+        x:Name="DateTimePickerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Armstrong.Client.Views" xmlns:controls="clr-namespace:Armstrong.Client.Views.Controls"
+        xmlns:local="clr-namespace:Armstrong.Client.Views" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodels="clr-namespace:Armstrong.Client.ViewModels"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        materialDesign:ThemeAssist.Theme="Dark"
         mc:Ignorable="d"
         Title="DateTimePicker" 
-        Height="500" Width="550" 
+        Height="300" Width="700" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" 
-        WindowStyle="None">
+        WindowStyle="None" BorderBrush="#FF424242" BorderThickness="2">
+
+    <Window.DataContext>
+        <viewmodels:DateTimePickerViewModel />
+    </Window.DataContext>
+
     <Grid>
-        <controls:ChartDataPicker />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="Gear" Height="17" Width="17"/>
+                    </TextBlock>
+                    <TextBlock Text="Настройка графика" FontSize="16"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Button Width="20" 
+                        Height="20" 
+                        BorderThickness="0" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                        Margin="5 5 10 5" Padding="0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" 
+                        Background="#FF424242" 
+                        BorderBrush="#FF303030" 
+                        Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=DateTimePickerWindow}">
+                    <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center">
+                        <DatePicker Margin="5" 
+                                    FirstDayOfWeek="Monday"
+                                    materialDesign:HintAssist.Hint="Выберите дату"
+                                    materialDesign:HintAssist.HelperText="Дата начала отсчета"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    SelectedDate="{Binding StartDate}"/>
+                        <materialDesign:TimePicker Margin="5" 
+                                                   Is24Hours="True" 
+                                                   materialDesign:HintAssist.Hint="Выберите время"
+                                                   materialDesign:HintAssist.HelperText="Время начала отсчета"
+                                                   Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+                                                   SelectedTime="{Binding StartTime}">
+                        </materialDesign:TimePicker>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center">
+                        <DatePicker Margin="5" 
+                                    FirstDayOfWeek="Monday"
+                                    materialDesign:HintAssist.Hint="Выберите дату"
+                                    materialDesign:HintAssist.HelperText="Дата окончания отсчета"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    SelectedDate="{Binding EndDate}"/>
+                        <materialDesign:TimePicker Margin="5" 
+                                                   Is24Hours="True"
+                                                   materialDesign:HintAssist.Hint="Выберите время"
+                                                   materialDesign:HintAssist.HelperText="Время окончания отсчета"
+                                                   Style="{StaticResource MaterialDesignOutlinedTimePicker}"
+                                                   SelectedTime="{Binding EndTime}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button x:Name="GetChart" 
+                    Margin="5 0 5 0"
+                    BorderThickness="0" 
+                    Height="50"
+                    Width="670"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Background="#FF424242" 
+                    BorderBrush="#FF303030" 
+                    Command="{Binding GetChart}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Width="20" 
+                                             Height="20"
+                                             Kind="ChartBellCurve"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"
+                                             Margin="5"/>
+                    <TextBlock Text="Построить график" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"
+                               Margin="5"/>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
