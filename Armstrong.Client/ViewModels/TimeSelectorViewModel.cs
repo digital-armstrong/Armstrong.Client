@@ -179,5 +179,19 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
+        public ICommand CloseWindow
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (obj is not null)
+                    {
+                        Window timeSelectorWindow = obj as Window;
+                        timeSelectorWindow.Close();
+                    }
+                });
+            }
+        }
     }
 }

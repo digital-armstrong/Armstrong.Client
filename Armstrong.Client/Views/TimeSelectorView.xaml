@@ -16,48 +16,102 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         materialDesign:ThemeAssist.Theme="Dark"
-        Title="TimeSelector" Height="150" Width="200" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="TimeSelector" Height="180" Width="350" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        BorderBrush="#FF424242" BorderThickness="2">
     <Window.DataContext>
         <viewmodels:TimeSelectorViewModel />
     </Window.DataContext>
     
     <Grid>
         <Grid.RowDefinitions>
-            
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Vertical"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <materialDesign:PackIcon Kind="Gear" Height="17" Width="17"/>
+                    </TextBlock>
+                    <TextBlock Text="Выбор интервала" FontSize="16"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Button Width="20" 
+                        Height="20" 
+                        BorderThickness="0" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                        Margin="5 5 10 5" Padding="0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" 
+                        Background="#EB5757" 
+                        BorderBrush="#FF303030" 
+                        Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=TimeSelectorWindow}">
+                    <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Button>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal"
                         VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Center"
                         Margin="10">
                 <RadioButton x:Name="daysReport"
                              IsChecked="{Binding IsDaysRangeSelected}"
                              Content="За 24 часа" 
                              Command="{Binding RadioButtonClick}"
-                             CommandParameter="{Binding Days}"/>
+                             CommandParameter="{Binding Days}"
+                             Margin="10"/>
                 <RadioButton x:Name="shiftReport"
                              IsChecked="{Binding IsShiftRangeSelected}"
                              Content="За смену" 
                              Command="{Binding RadioButtonClick}"
-                             CommandParameter="{Binding Shift}"/>
+                             CommandParameter="{Binding Shift}"
+                             Margin="10"/>
                 <RadioButton x:Name="twoHoursReport" 
                              IsChecked="{Binding IsHoursRangeSelected}"
                              Content="За 2 часа"
                              Command="{Binding RadioButtonClick}"
-                             CommandParameter="{Binding TwoHours}"/>
+                             CommandParameter="{Binding TwoHours}"
+                             Margin="10"/>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Button x:Name="GetReport"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Вывести отчет!" 
+        <Grid Grid.Row="2">
+            <Button x:Name="GetChart" 
+                    Margin="5 0 5 0"
+                    BorderThickness="0" 
+                    Height="50"
+                    Width="320"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Background="#FF424242" 
+                    BorderBrush="#FF303030" 
                     Command="{Binding GetReport}"
-                    CommandParameter="{Binding ElementName=TimeSelectorWindow}" /> 
+                    CommandParameter="{Binding ElementName=TimeSelectorWindow}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Width="20" 
+                                             Height="20"
+                                             Kind="MathCompass"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Center"
+                                             Margin="5"/>
+                    <TextBlock Text="Собрать отчет" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"
+                               Margin="5"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </Window>
