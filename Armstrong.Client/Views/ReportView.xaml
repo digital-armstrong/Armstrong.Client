@@ -115,7 +115,8 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Expander>
-                                <Expander Header="Спец. контроль">
+                                <Expander Header="Спец. контроль"
+                                          IsExpanded="True">
                                     <DataGrid x:Name="specialControlReportDataGrid" 
                                           ItemsSource="{Binding SpecialControlBindingCollection}"
                                           IsReadOnly="True"
