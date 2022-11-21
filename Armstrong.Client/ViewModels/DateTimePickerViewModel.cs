@@ -186,6 +186,15 @@ namespace Armstrong.Client.ViewModels
 
                     return _pointsCollection;
                 }
+                else
+                {
+                    foreach (var history in histories)
+                    {
+                        _pointsCollection.Add(new DateTimePoint(history.EventDate, history.SystemEventValue));
+                    }
+
+                    return _pointsCollection;
+                }
 
                 return _pointsCollection;
             }
