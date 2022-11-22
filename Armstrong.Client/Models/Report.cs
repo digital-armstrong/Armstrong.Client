@@ -139,9 +139,13 @@ namespace Armstrong.Client.Models
                 DateTime first = ReportHistories[i].EventDate;
                 DateTime last = ReportHistories[i + 1].EventDate;
 
+                double valueA = ReportHistories[i].SystemEventValue;
+                double valueB = ReportHistories[i + 1].SystemEventValue;
+                double avgAB = (valueA + valueB) / 2;
+
                 double substract = last.Subtract(first).TotalSeconds;
 
-                summ += ReportHistories[i].SystemEventValue * substract;
+                summ += avgAB * substract;
             }
 
             var consumption = Channel.ChannelConsumption / 3600;
