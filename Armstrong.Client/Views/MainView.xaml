@@ -48,7 +48,7 @@
         </materialDesign:Card>
       </Grid>
       <Grid Grid.Column="1">
-        <materialDesign:Card Padding="5" Margin="5">
+        <materialDesign:Card Padding="0" Margin="5">
           <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center">
@@ -62,7 +62,7 @@
 
               <ListView.ItemTemplate>
                 <ItemContainerTemplate>
-                  <Image Source="{Binding StateImagePath}" Width="14"/>
+                  <Image Source="{Binding StateImagePath}" Width="20"/>
                 </ItemContainerTemplate>
               </ListView.ItemTemplate>
             </ListView>
@@ -199,16 +199,20 @@
 
               <DataGrid.ContextMenu>
                 <ContextMenu PlacementTarget="{Binding LiveView}">
-                  <MenuItem Header="На контроль"
-                          Command="{Binding GetChart}"
-                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
-                  <MenuItem Header="График за сутки" 
-                            Command="{Binding GetDayChart}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
-                                    <MenuItem Header="График за дату"
-                            Command="{Binding GetDateTimePicker}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
-                                </ContextMenu>
+                    <MenuItem Header="Канал">
+                        <MenuItem Header="На контроль"
+                                  Command="{Binding GetChart}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                    </MenuItem>
+                    <MenuItem Header="График">
+                        <MenuItem Header="График за 24 часа" 
+                                  Command="{Binding GetDayChart}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                        <MenuItem Header="График с выбором даты"
+                                  Command="{Binding GetDateTimePicker}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                    </MenuItem>
+                </ContextMenu>
               </DataGrid.ContextMenu>
                 
               <DataGrid.Columns>
