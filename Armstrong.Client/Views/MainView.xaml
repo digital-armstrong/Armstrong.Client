@@ -224,14 +224,16 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Срв. №"  Binding="{Binding ServerId}"/>
+                                <DataGridTextColumn Header="С. №"  Binding="{Binding ServerId}"/>
                                 <DataGridTextColumn Header="К. №"  Binding="{Binding ChannelId}"/>
                                 <DataGridTextColumn Header="Имя"  Binding="{Binding ChannelName}"/>
                                 <DataGridTextColumn Header="Детектор"  Binding="{Binding DeviceName}"/>
+                                <DataGridTextColumn Header="Расположение" Binding="{Binding DeviceLocation}" />
                                 <DataGridTextColumn Header="Дата"  Binding="{Binding EventDateTime, StringFormat={}{0:HH:mm:ss}}"/>
                                 <DataGridTextColumn Header="Знач."  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
                                 <DataGridTextColumn Header="Размерн."  Binding="{Binding Unit}"/>
                                 <DataGridTextColumn Header="Знач. не сист."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
+                                <DataGridTextColumn Header="Собст. фон" Binding="{Binding DeviceSelfBackground, StringFormat={}{0:E3}}" />
                                 <DataGridTextColumn Header="Колич."  Binding="{Binding EventCount}"/>
                                 <DataGridTextColumn Header="Имп/сек"  Binding="{Binding ImpulsesEventValue, StringFormat={}{0:n3}}"/>
                             </DataGrid.Columns>
