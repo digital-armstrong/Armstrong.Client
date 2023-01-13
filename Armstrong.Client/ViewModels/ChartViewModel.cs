@@ -4,7 +4,6 @@ using Armstrong.Client.Utilits;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -44,10 +43,17 @@ namespace Armstrong.Client.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    XAxesBindingCollection.FirstOrDefault().MinLimit = null;
-                    XAxesBindingCollection.FirstOrDefault().MaxLimit = null;
-                    YAxesBindingCollection.FirstOrDefault().MinLimit = null;
-                    YAxesBindingCollection.FirstOrDefault().MaxLimit = null;
+                    foreach (var x in XAxesBindingCollection)
+                    {
+                        x.MaxLimit = null;
+                        x.MinLimit = null;
+                    }
+
+                    foreach (var y in YAxesBindingCollection)
+                    {
+                        y.MaxLimit = null;
+                        y.MinLimit = null;
+                    }
                 });
             }
         }

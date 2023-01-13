@@ -140,8 +140,37 @@ namespace Armstrong.Client.ViewModels
         {
             new Axis
             {
+                SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
+                IsVisible = false,
                 Labeler = value => value.ToString("E3"),
                 LabelsPaint = new SolidColorPaint(SKColors.White)
+            },
+
+            new Axis
+            {
+                SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
+                IsVisible= false,
+                Labeler = value => value.ToString("E3"),
+                LabelsPaint = new SolidColorPaint(SKColors.AntiqueWhite),
+                Position = LiveChartsCore.Measure.AxisPosition.End
+            },
+
+            new Axis
+            {
+                SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
+                IsVisible = false,
+                Labeler = value => value.ToString("E3"),
+                LabelsPaint = new SolidColorPaint(SKColors.FloralWhite),
+                Position = LiveChartsCore.Measure.AxisPosition.End
+            },
+
+            new Axis
+            {
+                SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
+                IsVisible = false,
+                Labeler = value => value.ToString("E3"),
+                LabelsPaint = new SolidColorPaint(SKColors.FloralWhite),
+                Position = LiveChartsCore.Measure.AxisPosition.End
             }
         };
 
@@ -151,12 +180,16 @@ namespace Armstrong.Client.ViewModels
 
             foreach (var _channel in SelectedChannels)
             {
+                var scaleGroupIndex = _channel.DeviceType - 1;
+                YAxes[scaleGroupIndex].IsVisible = true;
+
                 _series.Add(new LineSeries<DateTimePoint>
                 {
                     GeometrySize = 0.1,
                     Values = GetPointsCollection(_channel, startDateTime, endDateTime),
                     TooltipLabelFormatter = (chartPoint)
-                        => $"Name: {_channel.ChannelName}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                        => $"Name: {_channel.ChannelName}\nDevice: {_channel.DeviceName}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                    ScalesYAt = scaleGroupIndex,
                 });
             }
 
