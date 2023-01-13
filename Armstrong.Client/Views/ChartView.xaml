@@ -65,7 +65,7 @@
                         Series="{Binding SeriesBindigCollection}"
                         XAxes="{Binding XAxesBindingCollection}"
                         YAxes="{Binding YAxesBindingCollection}"
-                        ZoomMode="None" />
+                        ZoomMode="Both" />
         </Grid>
     </Grid>
 </Window>
