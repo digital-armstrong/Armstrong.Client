@@ -34,7 +34,11 @@ namespace Armstrong.Client.Models
             get => _channelState;
             set
             {
-                if (value == _channelState) return;
+                if (value == _channelState)
+                {
+                    return;
+                }
+
                 _channelState = value;
                 OnPropertyChanged();
             }
@@ -45,7 +49,11 @@ namespace Armstrong.Client.Models
             get => _stateImagePath;
             set
             {
-                if (value == _stateImagePath) return;
+                if (value == _stateImagePath)
+                {
+                    return;
+                }
+
                 _stateImagePath = value;
                 OnPropertyChanged();
             }
@@ -59,13 +67,17 @@ namespace Armstrong.Client.Models
             get => _channelSpecialControl;
             set
             {
-                if (value == _channelSpecialControl) return;
+                if (value == _channelSpecialControl)
+                {
+                    return;
+                }
+
                 _channelSpecialControl = value;
                 OnPropertyChanged();
             }
         }
 
-    [Column("name_db")]
+        [Column("name_db")]
         public string? DeviceName { get; set; }
         [Column("type")]
         public int DeviceType { get; set; }
@@ -84,7 +96,11 @@ namespace Armstrong.Client.Models
             get => _eventDateTime;
             set
             {
-                if (value.Equals(_eventDateTime)) return;
+                if (value.Equals(_eventDateTime))
+                {
+                    return;
+                }
+
                 _eventDateTime = value;
                 OnPropertyChanged();
             }
@@ -95,7 +111,11 @@ namespace Armstrong.Client.Models
             get => _systemEventValue;
             set
             {
-                if (value == _systemEventValue) return;
+                if (value == _systemEventValue)
+                {
+                    return;
+                }
+
                 _systemEventValue = value;
                 OnPropertyChanged();
             }
@@ -108,7 +128,11 @@ namespace Armstrong.Client.Models
             get => _notSystemEventValue;
             set
             {
-                if (value == _notSystemEventValue) return;
+                if (value == _notSystemEventValue)
+                {
+                    return;
+                }
+
                 _notSystemEventValue = value;
                 OnPropertyChanged();
             }
@@ -119,7 +143,11 @@ namespace Armstrong.Client.Models
             get => _impulsesEventValue;
             set
             {
-                if (value == _impulsesEventValue) return;
+                if (value == _impulsesEventValue)
+                {
+                    return;
+                }
+
                 _impulsesEventValue = value;
                 OnPropertyChanged();
             }
@@ -136,7 +164,11 @@ namespace Armstrong.Client.Models
             get => _eventCount;
             set
             {
-                if (value == _eventCount) return;
+                if (value == _eventCount)
+                {
+                    return;
+                }
+
                 _eventCount = value;
                 OnPropertyChanged();
             }
@@ -147,7 +179,11 @@ namespace Armstrong.Client.Models
             get => _errorEventCount;
             set
             {
-                if (value == _errorEventCount) return;
+                if (value == _errorEventCount)
+                {
+                    return;
+                }
+
                 _errorEventCount = value;
                 OnPropertyChanged();
             }
