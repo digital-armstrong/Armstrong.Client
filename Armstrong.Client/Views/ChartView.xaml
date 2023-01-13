@@ -22,6 +22,10 @@
         <viewmodels:ChartViewModel />
     </Window.DataContext>
 
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding ResetZoom}"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
