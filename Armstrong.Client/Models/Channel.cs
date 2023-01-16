@@ -10,6 +10,10 @@ namespace Armstrong.Client.Models
     {
         private int _channelState;
         private bool _channelSpecialControl;
+        private string? _channelName;
+        private string? _deviceName;
+        private double _deviceSelfBackground;
+        private string? _deviceLocation;
         private string _stateImagePath = @"pack://application:,,,/Resources/normal.png";
         private DateTime _eventDateTime;
         private double _systemEventValue;
@@ -25,7 +29,20 @@ namespace Armstrong.Client.Models
         [Column("server_id")]
         public int ServerId { get; set; }
         [Column("name_controlpoint")]
-        public string? ChannelName { get; set; }
+        public string? ChannelName
+        {
+            get => _channelName;
+            set
+            {
+                if (value == _channelName)
+                {
+                    return;
+                }
+
+                _channelName = value;
+                OnPropertyChanged();
+            }
+        }
         [Column("on_off")]
         public int ChannelPowerState { get; set; }
         [Column("state_for_threeview")]
@@ -78,7 +95,20 @@ namespace Armstrong.Client.Models
         }
 
         [Column("name_db")]
-        public string? DeviceName { get; set; }
+        public string? DeviceName
+        {
+            get => _deviceName;
+            set
+            {
+                if (value == _deviceName)
+                {
+                    return;
+                }
+
+                _deviceName = value;
+                OnPropertyChanged();
+            }
+        }
         [Column("type")]
         public int DeviceType { get; set; }
         [Column("min_nuclid_value")]
@@ -86,9 +116,35 @@ namespace Armstrong.Client.Models
         [Column("max_nuclid_value")]
         public double DeviceCalibrateMax { get; set; }
         [Column("background")]
-        public double DeviceSelfBackground { get; set; }
+        public double DeviceSelfBackground
+        {
+            get => _deviceSelfBackground;
+            set
+            {
+                if (value == _deviceSelfBackground)
+                {
+                    return;
+                }
+
+                _deviceSelfBackground = value;
+                OnPropertyChanged();
+            }
+        }
         [Column("name_location")]
-        public string? DeviceLocation { get; set; }
+        public string? DeviceLocation
+        {
+            get => _deviceLocation;
+            set
+            {
+                if (value == _deviceLocation)
+                {
+                    return;
+                }
+
+                _deviceLocation = value;
+                OnPropertyChanged();
+            }
+        }
 
         [Column("event_date")]
         public DateTime EventDateTime

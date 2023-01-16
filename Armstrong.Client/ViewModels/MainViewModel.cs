@@ -394,14 +394,18 @@ namespace Armstrong.Client.ViewModels
 
         private static void UpdateChannelInfo(Channel channel, Channel update)
         {
+            channel.ChannelName = update.ChannelName;
+            channel.DeviceName = update.DeviceName;
+            channel.DeviceSelfBackground = update.DeviceSelfBackground;
+            channel.DeviceLocation = update.DeviceLocation;
             channel.ChannelSpecialControl = update.ChannelSpecialControl;
+
             channel.EventDateTime = update.EventDateTime;
             channel.SystemEventValue = update.SystemEventValue;
             channel.NotSystemEventValue = update.NotSystemEventValue;
             channel.ImpulsesEventValue = update.ImpulsesEventValue;
             channel.EventCount = update.EventCount;
             channel.ErrorEventCount = update.ErrorEventCount;
-            channel.ChannelSpecialControl = update.ChannelSpecialControl;
         }
 
         private struct FilterNodeName
