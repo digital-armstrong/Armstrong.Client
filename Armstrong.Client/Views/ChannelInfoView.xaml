@@ -308,10 +308,12 @@
                                        Margin="10"/>
                                 <CheckBox x:Name="powerStateCheckBox" 
                                           IsChecked="{Binding SelectedChannel.ChannelPowerState}"
-                                          Margin="10"/>
+                                          Margin="10" 
+                                          Background="White"/>
                                 <Label Content="Спец. контр.:" 
                                        Margin="10"/>
-                                <CheckBox x:Name="specialControlCheckBox" 
+                                <CheckBox x:Name="specialControlCheckBox"
+                                          Background="White"
                                           IsChecked="{Binding SelectedChannel.ChannelSpecialControl}"
                                           Margin="10"/>
                             </StackPanel>
@@ -399,21 +401,24 @@
                         Margin="5 0 5 5" 
                         Padding="0" 
                         HorizontalAlignment="Right" 
-                        VerticalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Background="#27AE60"  
                         BorderBrush="#FF303030" 
                         Command="{Binding Save}" 
                         CommandParameter="{Binding ElementName=ChannelInfoWindow}">
                     <StackPanel Orientation="Horizontal" 
                                 Margin="5">
                         <materialDesign:PackIcon Kind="ContentSave" 
+                                                 Foreground="#FF303030"
                                                  Height="17" 
                                                  Width="20" 
                                                  HorizontalAlignment="Center" 
                                                  VerticalAlignment="Center" 
                                                  Margin="0 0 5 0"/>
                         <TextBlock Text="Сохранить" 
-                                       FontSize="15"
-                                       Margin="0 0 5 0"/>
+                                   FontSize="15"
+                                   Foreground="#FF303030"
+                                   Margin="0 0 5 0"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
