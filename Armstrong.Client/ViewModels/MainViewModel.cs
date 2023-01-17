@@ -551,6 +551,30 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
+        public ObservableCollection<int> SelectedChannelId { get; set; }
+        public ICommand ShowChannelInfo
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    var channels = (ICollection<Object>)obj;
+                    var selectedChannels = new List<Channel>();
+
+                    foreach (Channel _channel in channels)
+                    {
+                        selectedChannels.Add(_channel);
+                    }
+
+                    SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannel;
+                    SelectedChannelId.Add(selectedChannels.FirstOrDefault().Id);
+
+                    ChannelInfoView channelInfoView = new();
+                    channelInfoView.Show();
+                });
+            }
+        }
+
         public ICommand ClickThreeView
         {
             get
