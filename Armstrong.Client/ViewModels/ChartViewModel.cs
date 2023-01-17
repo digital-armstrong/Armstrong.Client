@@ -2,6 +2,7 @@
 using Armstrong.Client.Models;
 using Armstrong.Client.Utilits;
 using LiveChartsCore;
+using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -14,6 +15,19 @@ namespace Armstrong.Client.ViewModels
         public ObservableCollection<ISeries> SeriesBindigCollection { get; set; }
         public ObservableCollection<Axis> XAxesBindingCollection { get; set; }
         public ObservableCollection<Axis> YAxesBindingCollection { get; set; }
+
+        private TooltipPosition _toolTipPosition = TooltipPosition.Left;
+        public TooltipPosition ToolTipPosition
+        {
+            get => _toolTipPosition;
+            set
+            {
+                _toolTipPosition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsToolTipHiden { get; set; }
 
         public ChartViewModel()
         {
@@ -32,6 +46,27 @@ namespace Armstrong.Client.ViewModels
                     {
                         Window chartViewWindow = obj as Window;
                         chartViewWindow.Close();
+                    }
+                });
+            }
+        }
+
+        public ICommand HideShowToolTip
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    IsToolTipHiden = !IsToolTipHiden;
+
+                    switch (IsToolTipHiden)
+                    {
+                        case true:
+                            ToolTipPosition = TooltipPosition.Hidden;
+                            break;
+                        case false:
+                            ToolTipPosition = TooltipPosition.Left;
+                            break;
                     }
                 });
             }

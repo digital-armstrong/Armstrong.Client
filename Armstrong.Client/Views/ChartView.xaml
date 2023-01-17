@@ -24,6 +24,7 @@
 
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding ResetZoom}"/>
+        <KeyBinding Key="H" Command="{Binding HideShowToolTip}" />
     </Window.InputBindings>
 
     <Grid>
@@ -66,10 +67,11 @@
 
         <Grid Grid.Row="1">
             <lvc:CartesianChart x:Name="GeneralChart"
-                        Series="{Binding SeriesBindigCollection}"
-                        XAxes="{Binding XAxesBindingCollection}"
-                        YAxes="{Binding YAxesBindingCollection}"
-                        ZoomMode="Both" />
+                                Series="{Binding SeriesBindigCollection}"
+                                XAxes="{Binding XAxesBindingCollection}"
+                                YAxes="{Binding YAxesBindingCollection}"
+                                TooltipPosition="{Binding ToolTipPosition}"
+                                ZoomMode="Both"/>
         </Grid>
     </Grid>
 </Window>
