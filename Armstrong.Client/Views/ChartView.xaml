@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF" xmlns:viewmodels="clr-namespace:Armstrong.Client.ViewModels"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF" 
+        xmlns:viewmodels="clr-namespace:Armstrong.Client.ViewModels"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -15,8 +16,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         materialDesign:ThemeAssist.Theme="Dark"
-        Title="Armstrong Viewer" Height="768" Width="1024" WindowState="Maximized"
-        WindowStyle="None">
+        Title="Armstrong Viewer" 
+        Height="768" Width="1024" 
+        WindowState="Maximized" WindowStyle="None">
 
     <Window.DataContext>
         <viewmodels:ChartViewModel />
@@ -25,6 +27,9 @@
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding ResetZoom}"/>
         <KeyBinding Key="H" Command="{Binding HideShowToolTip}" />
+        <KeyBinding Key="P" 
+                    Command="{Binding MakeScreenshot}"
+                    CommandParameter="{Binding ElementName=GeneralChart}"/>
     </Window.InputBindings>
 
     <Grid>

@@ -185,6 +185,7 @@ namespace Armstrong.Client.ViewModels
 
                 _series.Add(new LineSeries<DateTimePoint>
                 {
+                    Name = _channel.ChannelName,
                     GeometrySize = 0.1,
                     Values = GetPointsCollection(_channel, startDateTime, endDateTime),
                     TooltipLabelFormatter = (chartPoint)

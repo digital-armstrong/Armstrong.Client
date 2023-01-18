@@ -4,6 +4,10 @@ using Armstrong.Client.Utilits;
 using LiveChartsCore;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.SKCharts;
+using LiveChartsCore.SkiaSharpView.WPF;
+using Ookii.Dialogs.Wpf;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -47,6 +51,28 @@ namespace Armstrong.Client.ViewModels
                         Window chartViewWindow = obj as Window;
                         chartViewWindow.Close();
                     }
+                });
+            }
+        }
+
+        public ICommand MakeScreenshot
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    var chart = obj as CartesianChart;
+                    var skChart = new SKCartesianChart(chart) { Width = 1920, Height = 1080, };
+                    skChart.Background = SkiaSharp.SKColor.Parse("#FF303030");
+
+                    skChart.LegendPosition = LegendPosition.Top;
+                    skChart.LegendTextPaint = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.White);
+
+                    VistaFolderBrowserDialog vistaFolderBrowserDialog = new();
+                    vistaFolderBrowserDialog.ShowDialog();
+                    var filePath = $"{vistaFolderBrowserDialog.SelectedPath}\\export.png";
+
+                    skChart.SaveImage(path: filePath, quality: 100);
                 });
             }
         }
