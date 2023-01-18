@@ -188,7 +188,10 @@ namespace Armstrong.Client.ViewModels
                     GeometrySize = 0.1,
                     Values = GetPointsCollection(_channel, startDateTime, endDateTime),
                     TooltipLabelFormatter = (chartPoint)
-                        => $"Name: {_channel.ChannelName}\nDevice: {_channel.DeviceName}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                        => $"Name: {_channel.ChannelName}{Environment.NewLine}" +
+                        $"Device: {_channel.DeviceName}{Environment.NewLine}" +
+                        $"Date: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}{Environment.NewLine}" +
+                        $"Value: {chartPoint.PrimaryValue:E3}",
                     ScalesYAt = scaleGroupIndex,
                 });
             }

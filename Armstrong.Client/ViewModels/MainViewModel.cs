@@ -240,7 +240,9 @@ namespace Armstrong.Client.ViewModels
                     GeometrySize = 0.1,
                     Values = PointsCollection,
                     TooltipLabelFormatter = (chartPoint)
-                        => $"Name: {SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                        => $"Name: {SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}{Environment.NewLine}" +
+                        $"Date: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}{Environment.NewLine}" +
+                        $"Value: {chartPoint.PrimaryValue:E3}",
                 }
             };
         }
