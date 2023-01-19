@@ -5,57 +5,12 @@ using LiveChartsCore;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.WPF;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Armstrong.Client.ViewModels
 {
-    public class XAxisLimits : NotifyPropertyChanged
-    {
-        private double? _minLimit;
-
-        public double? MinLimit
-        {
-            get { return _minLimit; }
-            set { _minLimit = value; OnPropertyChanged(); }
-        }
-
-        private double? _maxLimit;
-
-        public double? MaxLimit
-        {
-            get { return _maxLimit; }
-            set { _maxLimit = value; OnPropertyChanged(); }
-        }
-
-        private DateTime? _minDateTime;
-
-        public DateTime? MinDateTime
-        {
-            get => _minDateTime;
-            set { _minDateTime = value; OnPropertyChanged(); }
-        }
-
-        private DateTime? _maxDateTime;
-
-        public DateTime? MaxDateTime
-        {
-            get => _maxDateTime;
-            set { _maxDateTime = value; OnPropertyChanged(); }
-        }
-
-        public void ConvertToDateTime()
-        {
-            if (MaxLimit is not null && MinLimit is not null)
-            {
-                MinDateTime = new DateTime((long)MinLimit);
-                MaxDateTime = new DateTime((long)MaxLimit);
-            }
-        }
-    }
     public class ChartViewModel : NotifyPropertyChanged
     {
         public ObservableCollection<ISeries> SeriesBindigCollection { get; set; }
@@ -74,15 +29,6 @@ namespace Armstrong.Client.ViewModels
         }
 
         public bool IsToolTipHiden { get; set; }
-
-        private XAxisLimits _xAxisLimits = new();
-
-        public XAxisLimits XAxisLimits
-        {
-            get { return _xAxisLimits; }
-            set { _xAxisLimits = value; OnPropertyChanged(); }
-        }
-
 
         public ChartViewModel()
         {
@@ -137,24 +83,6 @@ namespace Armstrong.Client.ViewModels
                             ToolTipPosition = TooltipPosition.Left;
                             break;
                     }
-                });
-            }
-        }
-
-        public ICommand LoadAnyPoints
-        {
-            get
-            {
-                return new DelegateCommand((obj) =>
-                {
-
-                    var min = XAxesBindingCollection.SingleOrDefault().MinLimit;
-                    var max = XAxesBindingCollection.SingleOrDefault().MaxLimit;
-
-                    XAxisLimits.MinLimit = min;
-                    XAxisLimits.MaxLimit = max;
-
-                    XAxisLimits.ConvertToDateTime();
                 });
             }
         }
