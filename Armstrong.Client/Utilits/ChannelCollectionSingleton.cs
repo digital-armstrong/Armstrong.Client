@@ -1,15 +1,18 @@
-﻿using System.Collections.ObjectModel;
+﻿using Armstrong.Client.Models;
+using System.Collections.ObjectModel;
 
 namespace Armstrong.Client.Utilits
 {
     public class ChannelCollectionSingleton
     {
         private static ChannelCollectionSingleton _source;
-        public ObservableCollection<int> SelectedChannel;
+        public ObservableCollection<int> SelectedChannelsId;
+        public ObservableCollection<Channel> SelectedChannelsCollection;
 
         private ChannelCollectionSingleton()
         {
-            SelectedChannel = new ObservableCollection<int>();
+            SelectedChannelsId = new ObservableCollection<int>();
+            SelectedChannelsCollection = new ObservableCollection<Channel>();
         }
 
         public static ChannelCollectionSingleton GetInstance()

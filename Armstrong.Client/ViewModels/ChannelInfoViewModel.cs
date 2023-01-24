@@ -17,7 +17,7 @@ namespace Armstrong.Client.ViewModels
 
         public ChannelInfoViewModel()
         {
-            SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannel.FirstOrDefault();
+            SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannelsId.FirstOrDefault();
 
             if (SelectedChannelId is not 0)
             {

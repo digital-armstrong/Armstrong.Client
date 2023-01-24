@@ -126,7 +126,7 @@
                     VerticalAlignment="Center" 
                     Background="#FF424242" 
                     BorderBrush="#FF303030" 
-                    Command="{Binding GetChart}"
+                    Command="{Binding GetTimeRange}"
                     CommandParameter="{Binding ElementName=DateTimePickerWindow}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <materialDesign:PackIcon Width="20" 

@@ -32,9 +32,12 @@ namespace Armstrong.Client.ViewModels
 
         public ChartViewModel()
         {
-            SeriesBindigCollection = ChartCollectionSingleton.GetInstance().SeriesCollection;
-            XAxesBindingCollection = ChartCollectionSingleton.GetInstance().XAxesCollection;
-            YAxesBindingCollection = ChartCollectionSingleton.GetInstance().YAxesCollection;
+            ChartUtils chartUtils = new();
+
+            SeriesBindigCollection = chartUtils.GetChartSeries(startDateTime: SelectedDateTimeRange.StartUtcDateTime,
+                                                               endDateTime: SelectedDateTimeRange.EndUtcDateTime);
+            XAxesBindingCollection = chartUtils.GetXAxisCollection();
+            YAxesBindingCollection = chartUtils.GetYAxisCollection();
         }
 
         public ICommand CloseWindow

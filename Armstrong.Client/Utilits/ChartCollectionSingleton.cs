@@ -5,28 +5,23 @@ using System.Collections.ObjectModel;
 
 namespace Armstrong.Client.Utilits
 {
-    public class ChartCollectionSingleton
+    public class ChartCollectionSingleton : NotifyPropertyChanged
     {
         private static ChartCollectionSingleton _source;
         public ObservableCollection<ISeries> SeriesCollection;
         public ObservableCollection<Axis> XAxesCollection;
         public ObservableCollection<Axis> YAxesCollection;
-        public ObservableCollection<Channel> SelectedChannelsCollection;
 
         private ChartCollectionSingleton()
         {
             SeriesCollection = new ObservableCollection<ISeries>();
             XAxesCollection = new ObservableCollection<Axis>();
             YAxesCollection = new ObservableCollection<Axis>();
-            SelectedChannelsCollection = new ObservableCollection<Channel>();
         }
 
         public static ChartCollectionSingleton GetInstance()
         {
-            if (_source == null)
-            {
-                _source = new ChartCollectionSingleton();
-            }
+            _source ??= new ChartCollectionSingleton();
 
             return _source;
         }

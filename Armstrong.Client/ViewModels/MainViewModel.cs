@@ -34,7 +34,6 @@ namespace Armstrong.Client.ViewModels
         private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
         private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
         private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
-        private SolidColorBrush _DefaultColorBrush => new(Color.FromRgb(230, 230, 230));
         private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
 
 
@@ -89,6 +88,7 @@ namespace Armstrong.Client.ViewModels
         };
 
         public List<Channel> SelectedChannels { get; set; } = new();
+        public Channel WatcherChannel { get; set; } = new();
         public List<int> ServerIds
         {
             get => _serverIds;
@@ -436,7 +436,7 @@ namespace Armstrong.Client.ViewModels
                 => new(item => ((Channel)item).ChannelState is ChannelState.Offline);
         }
 
-        public ICommand GetChart
+        public ICommand GetWatchingChart
         {
             get
             {
@@ -468,11 +468,8 @@ namespace Armstrong.Client.ViewModels
                     ICollection<Object> channels = (ICollection<Object>)obj;
 
                     SelectedChannels.Clear();
-
-                    foreach (Channel channel in channels)
-                    {
-                        SelectedChannels.Add(channel);
-                    }
+                    SelectedChannels.AddRange(from Channel channel in channels
+                                              select channel);
 
                     SelectedChannelName = SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
                     UpdateStatusIconColor = _RedColorBrush;
@@ -494,18 +491,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        public ICommand ShowTimeSelector
-        {
-            get
-            {
-                return new DelegateCommand((obj) =>
-                {
-                    TimeSelectorView timeSelector = new TimeSelectorView();
-                    timeSelector.Show();
-                });
-            }
-        }
-
         public ICommand MinimazeClick
         {
             get
@@ -514,6 +499,18 @@ namespace Armstrong.Client.ViewModels
                 {
                     GridHeight = new(1, GridUnitType.Star);
                     ChartHeight = new(300);
+                });
+            }
+        }
+
+        public ICommand ShowTimeSelector
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    TimeSelectorView timeSelector = new TimeSelectorView();
+                    timeSelector.Show();
                 });
             }
         }
@@ -528,7 +525,7 @@ namespace Armstrong.Client.ViewModels
                 {
                     ICollection<Object> channels = (ICollection<Object>)obj;
 
-                    SelectedChannelBindingCollection = ChartCollectionSingleton.GetInstance().SelectedChannelsCollection;
+                    SelectedChannelBindingCollection = ChannelCollectionSingleton.GetInstance().SelectedChannelsCollection;
                     SelectedChannelBindingCollection.Clear();
 
                     foreach (Channel _channel in channels)
@@ -538,17 +535,6 @@ namespace Armstrong.Client.ViewModels
 
                     DateTimePickerView dateTimePicker = new DateTimePickerView();
                     dateTimePicker.Show();
-                });
-            }
-        }
-
-        public ICommand RenderChart
-        {
-            get
-            {
-                return new DelegateCommand((obj) =>
-                {
-
                 });
             }
         }
@@ -568,7 +554,7 @@ namespace Armstrong.Client.ViewModels
                         selectedChannels.Add(_channel);
                     }
 
-                    SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannel;
+                    SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannelsId;
                     SelectedChannelId.Add(selectedChannels.FirstOrDefault().Id);
 
                     ChannelInfoView channelInfoView = new();
