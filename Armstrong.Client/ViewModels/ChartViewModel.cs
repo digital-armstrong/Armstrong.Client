@@ -15,6 +15,9 @@ namespace Armstrong.Client.ViewModels
 {
     public class ChartViewModel : NotifyPropertyChanged
     {
+        // ActualStepIndex = -1 because because I want the index to start at 0
+        public int ActualStepIndex { get; private set; } = -1;
+
         private ObservableCollection<ISeries> _series;
         public ObservableCollection<ISeries> SeriesBindigCollection
         {
@@ -48,6 +51,17 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
+        private ObservableCollection<ZoomHistory> _zoomHistoryBindingCollection = new();
+        public ObservableCollection<ZoomHistory> ZoomHistoryBindingCollection
+        {
+            get => _zoomHistoryBindingCollection;
+            set
+            {
+                _zoomHistoryBindingCollection = value;
+                OnPropertyChanged();
+            }
+        }
+
         private TooltipPosition _toolTipPosition = TooltipPosition.Left;
         public TooltipPosition ToolTipPosition
         {
@@ -69,6 +83,68 @@ namespace Armstrong.Client.ViewModels
                                                                endDateTime: SelectedDateTimeRange.EndUtcDateTime);
             XAxesBindingCollection = chartUtils.GetXAxisCollection();
             YAxesBindingCollection = chartUtils.GetYAxisCollection();
+
+            MakeNewStepInHistory();
+        }
+
+        private void ResetZoomAllAxis()
+        {
+            foreach (var x in XAxesBindingCollection)
+            {
+                x.MaxLimit = null;
+                x.MinLimit = null;
+            }
+
+            foreach (var y in YAxesBindingCollection)
+            {
+                y.MaxLimit = null;
+                y.MinLimit = null;
+            }
+        }
+
+        private void MakeStepBackInHistory()
+        {
+            if (ActualStepIndex > 0)
+            {
+                ZoomHistoryBindingCollection.Remove(ZoomHistoryBindingCollection.Where(i => i.StepIndex == ActualStepIndex).SingleOrDefault());
+                ActualStepIndex -= 1;
+                ObservableCollection<SeriesValue> actualSeries = ZoomHistoryBindingCollection.Where(i => i.StepIndex == ActualStepIndex)
+                                                                                             .Select(x => x.SeriesInStep)
+                                                                                             .SingleOrDefault();
+
+                foreach (SeriesValue series in actualSeries)
+                {
+                    SeriesBindigCollection.Where(x => x.Name == series.SeriesName).FirstOrDefault().Values = series.Values;
+                }
+            }
+            else
+            {
+                ActualStepIndex = 0;
+            }
+        }
+
+        private void MakeNewStepInHistory()
+        {
+            ActualStepIndex += 1;
+
+            var SeriesValues = new ObservableCollection<SeriesValue>();
+
+            foreach (ISeries s in SeriesBindigCollection)
+            {
+                ISeries? series = SeriesBindigCollection.Where(x => x.Name == s.Name).SingleOrDefault();
+
+                SeriesValues.Add(new SeriesValue
+                {
+                    SeriesName = series.Name,
+                    Values = series.Values
+                });
+            }
+
+            ZoomHistoryBindingCollection.Add(new ZoomHistory
+            {
+                StepIndex = ActualStepIndex,
+                SeriesInStep = SeriesValues
+            });
         }
 
         public ICommand CloseWindow
@@ -127,17 +203,7 @@ namespace Armstrong.Client.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    foreach (var x in XAxesBindingCollection)
-                    {
-                        x.MaxLimit = null;
-                        x.MinLimit = null;
-                    }
-
-                    foreach (var y in YAxesBindingCollection)
-                    {
-                        y.MaxLimit = null;
-                        y.MinLimit = null;
-                    }
+                    ResetZoomAllAxis();
                 });
             }
         }
@@ -151,7 +217,6 @@ namespace Armstrong.Client.ViewModels
                     if (obj is not null)
                     {
                         var chart = obj as CartesianChart;
-
                         var xAxis = chart.XAxes.SingleOrDefault();
                         var MinLimit = xAxis.MinLimit;
                         var MaxLimit = xAxis.MaxLimit;
@@ -163,20 +228,32 @@ namespace Armstrong.Client.ViewModels
                             SelectedDateTimeRange.EndUtcDateTime = new DateTime((long)xAxis.MaxLimit).ToUniversalTime();
 
                             ChartUtils chartUtils = new();
-
                             var newSeries = chartUtils.GetChartSeries(startDateTime: SelectedDateTimeRange.StartUtcDateTime,
                                                                endDateTime: SelectedDateTimeRange.EndUtcDateTime);
 
                             foreach (var series in newSeries)
                             {
-                                var value = SeriesBindigCollection.Where(x => x.Name == series.Name).FirstOrDefault();
-                                value.Values = series.Values;
+                                SeriesBindigCollection.Where(x => x.Name == series.Name).FirstOrDefault().Values = series.Values;
                             }
+
+                            MakeNewStepInHistory();
 
                             XAxesBindingCollection = chartUtils.GetXAxisCollection();
                             YAxesBindingCollection = chartUtils.GetYAxisCollection();
                         }
                     }
+                });
+            }
+        }
+
+        public ICommand OneStepBack
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    MakeStepBackInHistory();
+                    ResetZoomAllAxis();
                 });
             }
         }
