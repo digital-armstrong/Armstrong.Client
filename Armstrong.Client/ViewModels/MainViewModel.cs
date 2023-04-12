@@ -555,6 +555,7 @@ namespace Armstrong.Client.ViewModels
                     }
 
                     SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannelsId;
+                    SelectedChannelId.Clear();
                     SelectedChannelId.Add(selectedChannels.FirstOrDefault().Id);
 
                     ChannelInfoView channelInfoView = new();
