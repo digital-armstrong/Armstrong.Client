@@ -201,7 +201,7 @@
                                 <ContextMenu PlacementTarget="{Binding LiveView}">
                                     <MenuItem Header="Канал">
                                         <MenuItem Header="На контроль"
-                                                  Command="{Binding GetChart}"
+                                                  Command="{Binding GetWatchingChart}"
                                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
                                         <MenuItem Header="Информация"
                                                   Command="{Binding ShowChannelInfo}"
