@@ -69,7 +69,7 @@ namespace Armstrong.Client.ViewModels
             int V1 = 275, V2 = 276, V3 = 277, V4 = 278, V4_ = 279, V5 = 280, V6 = 281, V7 = 282;
 
             int[] blowoutGroup = new int[] { V1, V2, V3, V4, V4_, V5, V6, V7 };
-            int[] specialControlGroup = new int[] { 267, 268, 270, 271, 300, 301, 308, 333, 343 };
+            int[] specialControlGroup = new int[] { 267, 268, 270, 271, 300, 301, 308, 333, 343, 383 };
             int[] iodineGroup = new int[] { 235, 236, 237, 238, 229, 230 };
 
             foreach (var channel in blowoutGroup)
