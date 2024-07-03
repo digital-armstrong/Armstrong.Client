@@ -3,6 +3,8 @@ using Armstrong.Client.Constants;
 using Armstrong.Client.Data;
 using Armstrong.Client.Models;
 using Armstrong.Client.Repository;
+using Armstrong.Client.Utilits;
+using Armstrong.Client.Views;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
@@ -24,8 +26,28 @@ namespace Armstrong.Client.ViewModels
 {
     public class MainViewModel : NotifyPropertyChanged
     {
+        private GridLength _chartHeight = new(300);
+        private GridLength _gridHeight = new(1, GridUnitType.Star);
         private ObservableCollection<ISeries> _series;
         private List<int> _serverIds;
+        private string _selectedChannelName;
+        private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
+        private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
+        private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
+        private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
+
+
+        private ObservableCollection<Report> _reports = new();
+
+        public ObservableCollection<Report> Reports
+        {
+            get { return _reports; }
+            set
+            {
+                _reports = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Channel> Channels { get; set; }
         public ObservableCollection<DateTimePoint> PointsCollection { get; set; } = new();
@@ -66,6 +88,7 @@ namespace Armstrong.Client.ViewModels
         };
 
         public List<Channel> SelectedChannels { get; set; } = new();
+        public Channel WatcherChannel { get; set; } = new();
         public List<int> ServerIds
         {
             get => _serverIds;
@@ -76,7 +99,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private LiveChartsCore.Measure.ZoomAndPanMode _sizeMode;
         public LiveChartsCore.Measure.ZoomAndPanMode SizeMode
         {
             get => _sizeMode;
@@ -86,8 +108,6 @@ namespace Armstrong.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private GridLength _gridHeight = new(1, GridUnitType.Star);
 
         public GridLength GridHeight
         {
@@ -99,8 +119,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private GridLength _chartHeight = new(300);
-
         public GridLength ChartHeight
         {
             get => _chartHeight;
@@ -111,8 +129,6 @@ namespace Armstrong.Client.ViewModels
             }
         }
 
-        private string _selectedChannelName;
-
         public string SelectedChannelName
         {
             get => _selectedChannelName;
@@ -122,12 +138,6 @@ namespace Armstrong.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private SolidColorBrush _GrinColorBrush => new(Color.FromRgb(39, 174, 96));
-        private SolidColorBrush _RedColorBrush => new(Color.FromRgb(235, 87, 87));
-        private SolidColorBrush _DefaultColorBrush => new(Color.FromRgb(230, 230, 230));
-
-        private Brush _updateStatusIconColor = new SolidColorBrush(Color.FromRgb(230, 230, 230));
 
         public Brush UpdateStatusIconColor
         {
@@ -230,7 +240,9 @@ namespace Armstrong.Client.ViewModels
                     GeometrySize = 0.1,
                     Values = PointsCollection,
                     TooltipLabelFormatter = (chartPoint)
-                        => $"Name: {SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}\nDate: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}\nValue: {chartPoint.PrimaryValue:E3}",
+                        => $"Name: {SelectedChannels.Select(x => x.ChannelName).FirstOrDefault()}{Environment.NewLine}" +
+                        $"Date: {new DateTime((long)chartPoint.SecondaryValue):dd/MM/yyyy HH:mm:ss}{Environment.NewLine}" +
+                        $"Value: {chartPoint.PrimaryValue:E3}",
                 }
             };
         }
@@ -384,14 +396,18 @@ namespace Armstrong.Client.ViewModels
 
         private static void UpdateChannelInfo(Channel channel, Channel update)
         {
+            channel.ChannelName = update.ChannelName;
+            channel.DeviceName = update.DeviceName;
+            channel.DeviceSelfBackground = update.DeviceSelfBackground;
+            channel.DeviceLocation = update.DeviceLocation;
             channel.ChannelSpecialControl = update.ChannelSpecialControl;
+
             channel.EventDateTime = update.EventDateTime;
             channel.SystemEventValue = update.SystemEventValue;
             channel.NotSystemEventValue = update.NotSystemEventValue;
             channel.ImpulsesEventValue = update.ImpulsesEventValue;
             channel.EventCount = update.EventCount;
             channel.ErrorEventCount = update.ErrorEventCount;
-            channel.ChannelSpecialControl = update.ChannelSpecialControl;
         }
 
         private struct FilterNodeName
@@ -420,7 +436,7 @@ namespace Armstrong.Client.ViewModels
                 => new(item => ((Channel)item).ChannelState is ChannelState.Offline);
         }
 
-        public ICommand GetChart
+        public ICommand GetWatchingChart
         {
             get
             {
@@ -452,11 +468,8 @@ namespace Armstrong.Client.ViewModels
                     ICollection<Object> channels = (ICollection<Object>)obj;
 
                     SelectedChannels.Clear();
-
-                    foreach (Channel channel in channels)
-                    {
-                        SelectedChannels.Add(channel);
-                    }
+                    SelectedChannels.AddRange(from Channel channel in channels
+                                              select channel);
 
                     SelectedChannelName = SelectedChannels.Select(x => x.ChannelName).FirstOrDefault();
                     UpdateStatusIconColor = _RedColorBrush;
@@ -486,6 +499,67 @@ namespace Armstrong.Client.ViewModels
                 {
                     GridHeight = new(1, GridUnitType.Star);
                     ChartHeight = new(300);
+                });
+            }
+        }
+
+        public ICommand ShowTimeSelector
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    TimeSelectorView timeSelector = new TimeSelectorView();
+                    timeSelector.Show();
+                });
+            }
+        }
+
+        public ObservableCollection<Channel> SelectedChannelBindingCollection { get; set; }
+
+        public ICommand GetDateTimePicker
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    ICollection<Object> channels = (ICollection<Object>)obj;
+
+                    SelectedChannelBindingCollection = ChannelCollectionSingleton.GetInstance().SelectedChannelsCollection;
+                    SelectedChannelBindingCollection.Clear();
+
+                    foreach (Channel _channel in channels)
+                    {
+                        SelectedChannelBindingCollection.Add(_channel);
+                    }
+
+                    DateTimePickerView dateTimePicker = new DateTimePickerView();
+                    dateTimePicker.Show();
+                });
+            }
+        }
+
+        public ObservableCollection<int> SelectedChannelId { get; set; }
+        public ICommand ShowChannelInfo
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    var channels = (ICollection<Object>)obj;
+                    var selectedChannels = new List<Channel>();
+
+                    foreach (Channel _channel in channels)
+                    {
+                        selectedChannels.Add(_channel);
+                    }
+
+                    SelectedChannelId = ChannelCollectionSingleton.GetInstance().SelectedChannelsId;
+                    SelectedChannelId.Clear();
+                    SelectedChannelId.Add(selectedChannels.FirstOrDefault().Id);
+
+                    ChannelInfoView channelInfoView = new();
+                    channelInfoView.Show();
                 });
             }
         }
