@@ -16,7 +16,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        materialDesign:ThemeAssist.Theme="Dark"
+        materialDesign:ThemeAssist.Theme="Light"
         Title="Armstrong Viewer" Height="768" Width="1024" WindowState="Maximized"
         WindowStyle="None">
     <Window.DataContext>
@@ -92,14 +92,14 @@
                                 <behaviors:Interaction.Triggers>
                                     <behaviors:EventTrigger EventName="SelectedItemChanged">
                                         <behaviors:InvokeCommandAction
-                  Command="{Binding ClickThreeView}"
-                  CommandParameter="{Binding ElementName=mainTreeView, Path=SelectedItem}" />
+                                            Command="{Binding ClickThreeView}"
+                                            CommandParameter="{Binding ElementName=mainTreeView, Path=SelectedItem}" />
                                     </behaviors:EventTrigger>
                                 </behaviors:Interaction.Triggers>
 
                                 <TreeViewItem
-              ItemsSource="{Binding Servers, Mode=TwoWay}"
-              IsExpanded="True">
+                                    ItemsSource="{Binding Servers, Mode=TwoWay}"
+                                    IsExpanded="True">
 
                                     <TreeViewItem.Header>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -171,7 +171,12 @@
                         </Grid>
 
                         <Grid Grid.Row="1" >
-                            <Button x:Name="GetReport" Command="{Binding ShowTimeSelector}" Content="Отчет" Background="#FF424242" BorderBrush="#FF303030"/>
+                            <Button x:Name="GetReport" 
+                                    Command="{Binding ShowTimeSelector}" 
+                                    Content="Отчет" 
+                                    Background="#FFFFFFFF" 
+                                    BorderBrush="#FAFAFAFA"
+                                    Foreground="#424242"/>
                         </Grid>
                     </Grid>
 
@@ -188,14 +193,14 @@
 
                     <materialDesign:Card Padding="1" Margin="5">
                         <DataGrid x:Name="mainDataGrid"
-                    ItemsSource="{Binding LiveView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    IsReadOnly="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    GridLinesVisibility="Horizontal"
-                    CanUserSortColumns="False"
-                    CanUserDeleteRows="False"
-                    CanUserResizeRows="False">
+                                  ItemsSource="{Binding LiveView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  GridLinesVisibility="Horizontal"
+                                  CanUserSortColumns="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False">
 
                             <DataGrid.ContextMenu>
                                 <ContextMenu PlacementTarget="{Binding LiveView}">
@@ -209,11 +214,11 @@
                                     </MenuItem>
                                     <MenuItem Header="График">
                                         <MenuItem Header="График за 24 часа" 
-                                  Command="{Binding GetDayChart}"
-                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                                                  Command="{Binding GetDayChart}"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
                                         <MenuItem Header="График с выбором даты"
-                                  Command="{Binding GetDateTimePicker}"
-                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
+                                                  Command="{Binding GetDateTimePicker}"
+                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems}" />
                                     </MenuItem>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
@@ -262,27 +267,71 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Grid Grid.Column="0">
-                                        <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <materialDesign:PackIcon Kind="Update" Height="15" Width="15"  Foreground="{Binding UpdateStatusIconColor}"/>
+                                        <StackPanel Margin="5" 
+                                                    Orientation="Horizontal" 
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="Update" 
+                                                                     Height="15" 
+                                                                     Width="15" 
+                                                                     Foreground="{Binding UpdateStatusIconColor}"/>
                                         </StackPanel>
                                     </Grid>
                                     <Grid Grid.Column="1">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <materialDesign:PackIcon Kind="SmokeDetectorVariant" Height="15" Width="15"/>
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center">
+                                            <TextBlock Margin="0 0 5 0" 
+                                                       VerticalAlignment="Center" 
+                                                       HorizontalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="SmokeDetectorVariant" 
+                                                                         Height="15" 
+                                                                         Width="15"/>
                                             </TextBlock>
-                                            <TextBlock Text="Точка контроля: " FontSize="13"/>
-                                            <TextBlock Text="{Binding SelectedChannelName}" FontSize="13"/>
+                                            <TextBlock Text="Точка контроля: " 
+                                                       FontSize="13"/>
+                                            <TextBlock Text="{Binding SelectedChannelName}" 
+                                                       FontSize="13"/>
                                         </StackPanel>
                                     </Grid>
 
                                     <Grid Grid.Column="2">
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Width="20" Height="20" BorderThickness="0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Margin="5" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF424242" BorderBrush="#FF303030" Command="{Binding MaximizeClick}">
-                                                <materialDesign:PackIcon x:Name="maximize" Kind="ArrowExpand" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Right">
+                                            <Button Width="20" 
+                                                    Height="20" 
+                                                    BorderThickness="0" 
+                                                    materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                                    Margin="5" 
+                                                    Padding="0" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center" 
+                                                    Background="#FFFFFFFF" 
+                                                    BorderBrush="#FAFAFAFA" 
+                                                    Command="{Binding MaximizeClick}">
+                                                <materialDesign:PackIcon x:Name="maximize" 
+                                                                         Kind="ArrowExpand" 
+                                                                         Height="15" 
+                                                                         HorizontalAlignment="Center" 
+                                                                         VerticalAlignment="Center" 
+                                                                         Foreground="#424242"/>
                                             </Button>
-                                            <Button Width="20" Height="20" BorderThickness="0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Margin="5" Padding="0" HorizontalAlignment="Center" Background="#FF424242" BorderBrush="#FF303030" Command="{Binding MinimazeClick}">
-                                                <materialDesign:PackIcon x:Name="minimaze" Kind="ArrowCollapse" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            <Button Width="20"
+                                                    Height="20" 
+                                                    BorderThickness="0" 
+                                                    materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                                    Margin="5" 
+                                                    Padding="0" 
+                                                    HorizontalAlignment="Center" 
+                                                    Background="#FFFFFFFF" 
+                                                    BorderBrush="#FAFAFAFA" 
+                                                    Command="{Binding MinimazeClick}">
+                                                <materialDesign:PackIcon x:Name="minimaze" 
+                                                                         Kind="ArrowCollapse" 
+                                                                         Height="15" 
+                                                                         HorizontalAlignment="Center" 
+                                                                         VerticalAlignment="Center" 
+                                                                         Foreground="#424242"/>
                                             </Button>
                                         </StackPanel>
                                     </Grid>
@@ -290,10 +339,10 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <lvc:CartesianChart x:Name="myChart"
-                    Series="{Binding Series, Mode=TwoWay}"
-                    XAxes="{Binding XAxes, Mode=TwoWay}"
-                    YAxes="{Binding YAxes, Mode=TwoWay}" 
-                    ZoomMode="{Binding SizeMode}" />
+                                                    Series="{Binding Series, Mode=TwoWay}"
+                                                    XAxes="{Binding XAxes, Mode=TwoWay}"
+                                                    YAxes="{Binding YAxes, Mode=TwoWay}" 
+                                                    ZoomMode="{Binding SizeMode}" />
                             </Grid>
                         </Grid>
                     </materialDesign:Card>

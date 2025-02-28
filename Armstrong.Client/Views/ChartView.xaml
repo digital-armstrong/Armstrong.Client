@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        materialDesign:ThemeAssist.Theme="Dark"
+        materialDesign:ThemeAssist.Theme="Light"
         Title="Armstrong Viewer" 
         Height="768" Width="1024" 
         WindowState="Maximized" WindowStyle="None">
@@ -51,11 +51,20 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <materialDesign:PackIcon Kind="ChartBellCurve" Height="17" Width="17"/>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                    <TextBlock Margin="0 0 5 0" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="ChartBellCurve" 
+                                                 Height="17" 
+                                                 Width="17"
+                                                 Foreground="#424242"/>
                     </TextBlock>
-                    <TextBlock Text="График за период" FontSize="16"/>
+                    <TextBlock Text="График за период" 
+                               Foreground="#424242"
+                               FontSize="16"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="2">
@@ -67,10 +76,14 @@
                         HorizontalAlignment="Right" 
                         VerticalAlignment="Center" 
                         Background="#EB5757" 
-                        BorderBrush="#FF303030" 
+                        BorderBrush="#FF303030"
                         Command="{Binding CloseWindow}" 
                         CommandParameter="{Binding ElementName=ChartViewWindow}">
-                    <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <materialDesign:PackIcon x:Name="close" 
+                                             Kind="Close" 
+                                             Height="15" 
+                                             HorizontalAlignment="Center" 
+                                             VerticalAlignment="Center" />
                 </Button>
             </Grid>
         </Grid>
@@ -91,16 +104,18 @@
                             Padding="0" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Background="#FF424242" 
-                            BorderBrush="#FF303030" 
+                            Background="#FFFFFF" 
+                            BorderBrush="#FAFAFA" 
                             Command="{Binding ResetZoom}">
                         <TextBlock Text="Esc"
-                                   FontSize="10"/>
+                                   FontSize="10"
+                                   Foreground="#424242"/>
                     </Button>
                     <TextBlock Text="Сбросить масштаб"
                                FontSize="10"
                                VerticalAlignment="Center"
-                               Margin="0 0 5 0"/>
+                               Margin="0 0 5 0"
+                               Foreground="#424242" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -114,16 +129,18 @@
                             Padding="0" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Background="#FF424242" 
-                            BorderBrush="#FF303030" 
+                            Background="#FFFFFF" 
+                            BorderBrush="#FAFAFA" 
                             Command="{Binding HideShowToolTip}">
                         <TextBlock Text="H" 
-                                   FontSize="10"/>
+                                   FontSize="10"
+                                   Foreground="#424242" />
                     </Button>
                     <TextBlock Text="Скрыть панель информации"
                                FontSize="10"
                                VerticalAlignment="Center"
-                               Margin="0 0 5 0"/>
+                               Margin="0 0 5 0"
+                               Foreground="#424242" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -137,17 +154,19 @@
                             Padding="0" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Background="#FF424242" 
-                            BorderBrush="#FF303030" 
+                            Background="#FFFFFF" 
+                            BorderBrush="#FAFAFA" 
                             Command="{Binding MakeScreenshot}"
                             CommandParameter="{Binding ElementName=GeneralChart}">
                         <TextBlock Text="P" 
-                                   FontSize="10"/>
+                                   FontSize="10"
+                                   Foreground="#424242" />
                     </Button>
                     <TextBlock Text="Сделать скриншот"
                                FontSize="10"
                                VerticalAlignment="Center"
-                               Margin="0 0 5 0"/>
+                               Margin="0 0 5 0"
+                               Foreground="#424242" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -161,17 +180,19 @@
                             Padding="0" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Background="#FF424242" 
-                            BorderBrush="#FF303030" 
+                            Background="#FFFFFF" 
+                            BorderBrush="#FAFAFA" 
                             Command="{Binding LoadPoints}"
                             CommandParameter="{Binding ElementName=GeneralChart}">
                         <TextBlock Text="L" 
-                                   FontSize="10"/>
+                                   FontSize="10"
+                                   Foreground="#424242" />
                     </Button>
                     <TextBlock Text="Уточнить график"
                                FontSize="10"
                                VerticalAlignment="Center"
-                               Margin="0 0 5 0"/>
+                               Margin="0 0 5 0"
+                               Foreground="#424242" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -185,16 +206,18 @@
                             Padding="0" 
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center" 
-                            Background="#FF424242" 
-                            BorderBrush="#FF303030" 
+                            Background="#FFFFFF" 
+                            BorderBrush="#FAFAFA" 
                             Command="{Binding OneStepBack}">
                         <TextBlock Text="Z"
-                                   FontSize="10"/>
+                                   FontSize="10"
+                                   Foreground="#424242" />
                     </Button>
                     <TextBlock Text="На шаг назад"
                                FontSize="10"
                                VerticalAlignment="Center"
-                               Margin="0 0 5 0"/>
+                               Margin="0 0 5 0"
+                               Foreground="#424242" />
                 </StackPanel>
             </StackPanel>
         </Grid>

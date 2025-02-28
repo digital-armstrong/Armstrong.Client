@@ -12,162 +12,173 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        materialDesign:ThemeAssist.Theme="Dark"
+        materialDesign:ThemeAssist.Theme="Light"
         Title="ReportView" 
         Height="800" Width="1000" 
-        WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        BorderBrush="#FF424242" BorderThickness="2">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize"
+        AllowsTransparency="True" 
+        Background="#00FFFFFF">
+    
     <Window.DataContext>
         <viewmodels:ReportViewModel />
     </Window.DataContext>
     
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Border Background="{DynamicResource MaterialDesignPaper}" CornerRadius="5" BorderBrush="#424242" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0"></Grid>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid Grid.Column="0"></Grid>
+
+                    <Grid Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <materialDesign:PackIcon Kind="MathCompass" Height="17" Width="17"/>
-                    </TextBlock>
-                    <TextBlock Text="Отчет" FontSize="16"/>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="2">
-                <Button Width="20" 
-                        Height="20" 
-                        BorderThickness="0" 
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1" 
-                        Margin="5 5 10 5" Padding="0" 
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Center" 
-                        Background="#EB5757" 
-                        BorderBrush="#FF303030" 
-                        Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=ReportWindow}">
-                    <materialDesign:PackIcon x:Name="close" Kind="Close" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </Button>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="1">
-            <materialDesign:Card Padding="1" Margin="5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" x:Name="reportsDataGrid" Margin="0 0 0 5">
-                        <ScrollViewer>
-                            <StackPanel Orientation="Vertical">
-                                <Expander Header="Выбросы">
-                                    <DataGrid x:Name="blowoutReportDataGrid" 
-                                              ItemsSource="{Binding BlowoutBindigCollection}"
-                                              IsReadOnly="True"
-                                              CanUserAddRows="False"
-                                              AutoGenerateColumns="False"
-                                              GridLinesVisibility="Horizontal"
-                                              CanUserSortColumns="False"
-                                              CanUserDeleteRows="False"
-                                              CanUserResizeRows="False">
-
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                            <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                            <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                            <DataGridTextColumn Header="Расход" Binding="{Binding Channel.ChannelConsumption}" />
-                                            <DataGridTextColumn Header="Бк"  Binding="{Binding BlowoutSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Кл"  Binding="{Binding BlowoutNotSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                            <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Expander>
-                                <Expander Header="Выбросы по категориям">
-                                    <DataGrid x:Name="categoryReportDataGrid" 
-                                              ItemsSource="{Binding CategoryBlowoutBindingCollection}"
-                                              IsReadOnly="True"
-                                              CanUserAddRows="False"
-                                              AutoGenerateColumns="False"
-                                              GridLinesVisibility="Horizontal"
-                                              CanUserSortColumns="False"
-                                              CanUserDeleteRows="False"
-                                              CanUserResizeRows="False">
-
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Имя" Binding="{Binding ChannelName}" />
-                                            <DataGridTextColumn Header="Сист. знач"  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Expander>
-                                <Expander Header="Спец. контроль"
-                                          IsExpanded="True">
-                                    <DataGrid x:Name="specialControlReportDataGrid" 
-                                          ItemsSource="{Binding SpecialControlBindingCollection}"
-                                          IsReadOnly="True"
-                                          CanUserAddRows="False"
-                                          AutoGenerateColumns="False"
-                                          GridLinesVisibility="Horizontal"
-                                          CanUserSortColumns="False"
-                                          CanUserDeleteRows="False"
-                                          CanUserResizeRows="False">
-
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                            <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                            <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                            <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                            <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Expander>
-                                <Expander Header="Йодный участок">
-                                    <DataGrid x:Name="iodineReportDataGrid" 
-                                          ItemsSource="{Binding IodineBindingCollection}"
-                                          IsReadOnly="True"
-                                          CanUserAddRows="False"
-                                          AutoGenerateColumns="False"
-                                          GridLinesVisibility="Horizontal"
-                                          CanUserSortColumns="False"
-                                          CanUserDeleteRows="False"
-                                          CanUserResizeRows="False">
-
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                            <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                            <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                            <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
-                                            <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                            <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </Expander>
-                            </StackPanel>
-                        </ScrollViewer>
+                            </TextBlock>
+                            <TextBlock Text="Отчет" FontSize="16"/>
+                        </StackPanel>
                     </Grid>
 
+                    <Grid Grid.Column="2">
+                        <Button Width="20" 
+                                Height="20" 
+                                BorderThickness="0" 
+                                materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                Margin="5 5 10 5" Padding="0" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Center" 
+                                Background="#EB5757" 
+                                BorderBrush="#FF303030" 
+                                Command="{Binding CloseWindow}" 
+                                CommandParameter="{Binding ElementName=ReportWindow}">
+                            <materialDesign:PackIcon x:Name="close" 
+                                                     Kind="Close" 
+                                                     Height="15" 
+                                                     HorizontalAlignment="Center" 
+                                                     VerticalAlignment="Center" />
+                        </Button>
+                    </Grid>
                 </Grid>
-            </materialDesign:Card>
-        </Grid>
+
+                <Grid Grid.Row="1">
+                    <materialDesign:Card Padding="1" Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" x:Name="reportsDataGrid" Margin="0 0 0 5">
+                                <ScrollViewer>
+                                    <StackPanel Orientation="Vertical">
+                                        <Expander Header="Выбросы">
+                                            <DataGrid x:Name="blowoutReportDataGrid" 
+                                                      ItemsSource="{Binding BlowoutBindigCollection}"
+                                                      IsReadOnly="True"
+                                                      CanUserAddRows="False"
+                                                      AutoGenerateColumns="False"
+                                                      GridLinesVisibility="Horizontal"
+                                                      CanUserSortColumns="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserResizeRows="False">
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Расход" Binding="{Binding Channel.ChannelConsumption}" />
+                                                    <DataGridTextColumn Header="Бк"  Binding="{Binding BlowoutSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Кл"  Binding="{Binding BlowoutNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Expander>
+                                        <Expander Header="Выбросы по категориям">
+                                            <DataGrid x:Name="categoryReportDataGrid" 
+                                                      ItemsSource="{Binding CategoryBlowoutBindingCollection}"
+                                                      IsReadOnly="True"
+                                                      CanUserAddRows="False"
+                                                      AutoGenerateColumns="False"
+                                                      GridLinesVisibility="Horizontal"
+                                                      CanUserSortColumns="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserResizeRows="False">
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="Имя" Binding="{Binding ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач"  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Expander>
+                                        <Expander Header="Спец. контроль" 
+                                                  IsExpanded="True">
+                                            <DataGrid x:Name="specialControlReportDataGrid" 
+                                                      ItemsSource="{Binding SpecialControlBindingCollection}"
+                                                      IsReadOnly="True"
+                                                      CanUserAddRows="False"
+                                                      AutoGenerateColumns="False"
+                                                      GridLinesVisibility="Horizontal"
+                                                      CanUserSortColumns="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserResizeRows="False">
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Expander>
+                                        <Expander Header="Йодный участок">
+                                            <DataGrid x:Name="iodineReportDataGrid" 
+                                                      ItemsSource="{Binding IodineBindingCollection}"
+                                                      IsReadOnly="True"
+                                                      CanUserAddRows="False"
+                                                      AutoGenerateColumns="False"
+                                                      GridLinesVisibility="Horizontal"
+                                                      CanUserSortColumns="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserResizeRows="False">
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Expander>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

@@ -21,6 +21,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace Armstrong.Client.ViewModels
 {
@@ -71,8 +72,8 @@ namespace Armstrong.Client.ViewModels
         public Axis[] XAxes { get; set; } = {
             new Axis
             {
-                Labeler = value => new DateTime((long) value).ToString("HH:mm:ss"),
-                LabelsPaint = new SolidColorPaint(SKColors.White),
+                Labeler = (double value) => new DateTime((long)value).ToString("HH:mm:ss"),
+                LabelsPaint = new SolidColorPaint(SKColors.Black),
 
                 UnitWidth = TimeSpan.FromHours(1).Ticks,
                 MinStep = TimeSpan.FromSeconds(1).Ticks
@@ -83,7 +84,7 @@ namespace Armstrong.Client.ViewModels
             new Axis
             {
                 Labeler = value => value.ToString("E3"),
-                LabelsPaint = new SolidColorPaint(SKColors.White)
+                LabelsPaint = new SolidColorPaint(SKColors.Black)
             }
         };
 
@@ -316,41 +317,34 @@ namespace Armstrong.Client.ViewModels
 
         private void SetLineSeriesPoints(bool isWatching)
         {
-            if (SelectedChannels.Any())
+            if (!SelectedChannels.Any()) return;
+
+            using (var context = new DataContext())
             {
-                using (var context = new DataContext())
+                var startDate = new DateTime();
+                var pointsLimit = 100;
+
+                startDate = isWatching ? DateTime.UtcNow.AddHours(-1) : DateTime.UtcNow.AddDays(-1);
+
+                var histories = context.Histories.AsNoTracking()
+                    .Where(x => x.Id == SelectedChannels.Select(x => x.Id).FirstOrDefault())
+                    .Where(d => d.EventDate > startDate)
+                    .OrderBy(x => x.EventDate)
+                    .ToList();
+
+                PointsCollection.Clear();
+
+                if(histories.Count >  pointsLimit && !isWatching)
                 {
-                    var startDate = new DateTime();
-                    var pointsLimit = 100;
+                    var avgHistory = GetAvgHistory(histories);
+                    foreach (var history in avgHistory)
+                        PointsCollection.Add(new DateTimePoint(history.EventDate, history.SystemEventValue));
 
-                    startDate = isWatching ? DateTime.UtcNow.AddHours(-1) : DateTime.UtcNow.AddDays(-1);
-
-                    var histories = context.Histories.AsNoTracking()
-                                                   .Where(x => x.Id == SelectedChannels.Select(x => x.Id).FirstOrDefault())
-                                                   .Where(d => d.EventDate > startDate)
-                                                   .OrderBy(x => x.EventDate)
-                                                   .ToList();
-                    PointsCollection.Clear();
-
-
-                    if (histories.Count > pointsLimit && !isWatching)
-                    {
-                        var avgHistory = GetAvgHistory(histories);
-                        foreach (var history in avgHistory)
-                        {
-                            PointsCollection.Add(new DateTimePoint(history.EventDate,
-                                                                        history.SystemEventValue));
-                        }
-                    }
-                    else
-                    {
-                        foreach (var history in histories)
-                        {
-                            PointsCollection.Add(new DateTimePoint(history.EventDate,
-                                                                        history.SystemEventValue));
-                        }
-                    }
+                    return;
                 }
+
+                foreach (var history in histories)
+                    PointsCollection.Add(new DateTimePoint(history.EventDate, history.SystemEventValue));
             }
         }
 

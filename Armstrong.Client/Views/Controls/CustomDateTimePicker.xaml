@@ -12,7 +12,7 @@
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
-             materialDesign:ThemeAssist.Theme="Dark"
+             materialDesign:ThemeAssist.Theme="Light"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Calendar  />
+            <Calendar />
         </Grid>
         
         <Grid Grid.Row="1">
@@ -78,7 +78,11 @@
             </Grid>
 
             <Grid Grid.Column="2">
-                <Button Name="OK" Margin="5">
+                <Button Name="OK" 
+                        Margin="5" 
+                        Background="#FFFFFFFF"
+                        BorderBrush="#FFFAFAFA"
+                        Foreground="#FF424242">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Ок" />
                     </StackPanel>
