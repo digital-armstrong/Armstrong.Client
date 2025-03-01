@@ -17,7 +17,10 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         materialDesign:ThemeAssist.Theme="Light"
-        Title="Armstrong Viewer" Height="768" Width="1024" WindowState="Maximized"
+        Title="Armstrong Viewer" 
+        Height="768"
+        Width="1024"
+        WindowState="Maximized"
         WindowStyle="None">
     <Window.DataContext>
         <viewmodels:MainViewModel/>
@@ -25,8 +28,10 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" Name="bar" />
-            <RowDefinition Height="*" Name="body"/>
+            <RowDefinition Height="50"
+                           Name="bar" />
+            <RowDefinition Height="*"
+                           Name="body"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -36,33 +41,43 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <materialDesign:Card Padding="5" Margin="5">
+                <materialDesign:Card Padding="5" 
+                                     Margin="5">
                     <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0">
-              <materialDesign:PackIcon Kind="DevTo"  Margin="0 0 5 0"/>
+            <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Left" 
+                        Margin="0">
+              <materialDesign:PackIcon Kind="DevTo"
+                                       Margin="0 0 5 0"/>
               <TextBlock Text="Armstrong"/>
             </StackPanel>
           </TextBlock>
                 </materialDesign:Card>
             </Grid>
             <Grid Grid.Column="1">
-                <materialDesign:Card Padding="0" Margin="5">
+                <materialDesign:Card Padding="0"
+                                     Margin="5">
                     <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" 
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center">
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center">
           <StackPanel Orientation="Horizontal" Margin="0">
-            <ListView ItemsSource="{Binding Servers}" IsEnabled="False" Focusable="False" IsTextSearchEnabled="False">
+            <ListView ItemsSource="{Binding Servers}" 
+                      IsEnabled="False" 
+                      Focusable="False" 
+                      IsTextSearchEnabled="False">
               <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                  <StackPanel Orientation="Horizontal"></StackPanel>
+                  <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
               </ListView.ItemsPanel>
 
               <ListView.ItemTemplate>
                 <ItemContainerTemplate>
-                  <Image Source="{Binding StateImagePath}" Width="20"/>
+                  <Image Source="{Binding StateImagePath}" 
+                         Width="20"/>
                 </ItemContainerTemplate>
               </ListView.ItemTemplate>
             </ListView>
@@ -79,7 +94,8 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <materialDesign:Card Padding="15" Margin="5">
+                <materialDesign:Card Padding="15"
+                                     Margin="5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -102,16 +118,26 @@
                                     IsExpanded="True">
 
                                     <TreeViewItem.Header>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <materialDesign:PackIcon x:Name="serversHeader" Kind="ServerSecurity" Width="15" Margin="0 0 5 0"/>
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="serversHeader" 
+                                                                     Kind="ServerSecurity" 
+                                                                     Width="15" 
+                                                                     Margin="0 0 5 0"/>
                                             <TextBlock Text="Серверы" />
                                         </StackPanel>
                                     </TreeViewItem.Header>
 
                                     <TreeViewItem.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                                <materialDesign:PackIcon x:Name="iconServer" Kind="Server" Width="15" Margin="0 0 5 0"/>
+                                            <StackPanel Orientation="Horizontal" 
+                                                        HorizontalAlignment="Left" 
+                                                        VerticalAlignment="Center">
+                                                <materialDesign:PackIcon x:Name="iconServer" 
+                                                                         Kind="Server" 
+                                                                         Width="15" 
+                                                                         Margin="0 0 5 0"/>
                                                 <TextBlock Text="{Binding Name}" />
                                             </StackPanel>
                                         </DataTemplate>
@@ -121,22 +147,36 @@
                                 <TreeViewItem IsExpanded="True">
 
                                     <TreeViewItem.Header>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <materialDesign:PackIcon x:Name="levelsHeader" Kind="CarBrakeFluidLevel" Width="15" Margin="0 0 5 0"/>
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="levelsHeader" 
+                                                                     Kind="CarBrakeFluidLevel" 
+                                                                     Width="15" 
+                                                                     Margin="0 0 5 0"/>
                                             <TextBlock Text="Контрольный уровень" />
                                         </StackPanel>
                                     </TreeViewItem.Header>
 
-                                    <StackPanel x:Name="all" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Multicast" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="all" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Multicast" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Все" />
                                     </StackPanel>
-                                    <StackPanel x:Name="preEmg" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="RadioactiveCircleOutline" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="preEmg" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="RadioactiveCircleOutline" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Предаварийный" />
                                     </StackPanel>
-                                    <StackPanel x:Name="emg" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Radioactive" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="emg" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Radioactive" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Аварийный" />
                                     </StackPanel>
                                 </TreeViewItem>
@@ -144,26 +184,43 @@
                                 <TreeViewItem IsExpanded="True">
 
                                     <TreeViewItem.Header>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <materialDesign:PackIcon x:Name="additionalHeader" Kind="ExpandAll" Width="15" Margin="0 0 5 0"/>
+                                        <StackPanel Orientation="Horizontal" 
+                                                    HorizontalAlignment="Left" 
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:PackIcon x:Name="additionalHeader" 
+                                                                     Kind="ExpandAll" 
+                                                                     Width="15" 
+                                                                     Margin="0 0 5 0"/>
                                             <TextBlock Text="Дополнительно" />
                                         </StackPanel>
                                     </TreeViewItem.Header>
 
-                                    <StackPanel x:Name="specialControl" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Eye" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="specialControl" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Eye" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Спец. контроль" />
                                     </StackPanel>
-                                    <StackPanel x:Name="important" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="EyePlus" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="important" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="EyePlus" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Особо важные" />
                                     </StackPanel>
-                                    <StackPanel x:Name="channelDown" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="MessageAlert" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="channelDown" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="MessageAlert" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Канал в отказе" />
                                     </StackPanel>
-                                    <StackPanel x:Name="offline" Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="PowerPlugOff" Width="15" Margin="0 0 5 0"/>
+                                    <StackPanel x:Name="offline" 
+                                                Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="PowerPlugOff" 
+                                                                 Width="15" 
+                                                                 Margin="0 0 5 0"/>
                                         <TextBlock Text="Канал отключен" />
                                     </StackPanel>
                                 </TreeViewItem>
@@ -201,7 +258,6 @@
                                   CanUserSortColumns="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False">
-
                             <DataGrid.ContextMenu>
                                 <ContextMenu PlacementTarget="{Binding LiveView}">
                                     <MenuItem Header="Канал">
@@ -224,26 +280,41 @@
                             </DataGrid.ContextMenu>
 
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Header="СК" Binding="{Binding ChannelSpecialControl}" />
-                                <DataGridTemplateColumn Header="Сост." Width="70">
+                                <DataGridCheckBoxColumn Header="СК" 
+                                                        Binding="{Binding ChannelSpecialControl}" />
+                                <DataGridTemplateColumn Header="Сост." 
+                                                        Width="70">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Image Source="{Binding StateImagePath}" Width="20"/>
+                                            <Image Source="{Binding StateImagePath}" 
+                                                   Width="20"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="С. №"  Binding="{Binding ServerId}"/>
-                                <DataGridTextColumn Header="К. №"  Binding="{Binding ChannelId}"/>
-                                <DataGridTextColumn Header="Имя"  Binding="{Binding ChannelName}"/>
-                                <DataGridTextColumn Header="Детектор"  Binding="{Binding DeviceName}"/>
-                                <DataGridTextColumn Header="Расположение" Binding="{Binding DeviceLocation}" />
-                                <DataGridTextColumn Header="Дата"  Binding="{Binding EventDateTime, StringFormat={}{0:HH:mm:ss}}"/>
-                                <DataGridTextColumn Header="Знач."  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
-                                <DataGridTextColumn Header="Размерн."  Binding="{Binding Unit}"/>
-                                <DataGridTextColumn Header="Знач. не сист."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
-                                <DataGridTextColumn Header="Собст. фон" Binding="{Binding DeviceSelfBackground, StringFormat={}{0:E3}}" />
-                                <DataGridTextColumn Header="Колич."  Binding="{Binding EventCount}"/>
-                                <DataGridTextColumn Header="Имп/сек"  Binding="{Binding ImpulsesEventValue, StringFormat={}{0:n3}}"/>
+                                <DataGridTextColumn Header="С. №"  
+                                                    Binding="{Binding ServerId}"/>
+                                <DataGridTextColumn Header="К. №"  
+                                                    Binding="{Binding ChannelId}"/>
+                                <DataGridTextColumn Header="Имя"  
+                                                    Binding="{Binding ChannelName}"/>
+                                <DataGridTextColumn Header="Детектор"  
+                                                    Binding="{Binding DeviceName}"/>
+                                <DataGridTextColumn Header="Расположение" 
+                                                    Binding="{Binding DeviceLocation}" />
+                                <DataGridTextColumn Header="Дата"  
+                                                    Binding="{Binding EventDateTime, StringFormat={}{0:HH:mm:ss}}"/>
+                                <DataGridTextColumn Header="Знач."  
+                                                    Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
+                                <DataGridTextColumn Header="Размерн."  
+                                                    Binding="{Binding Unit}"/>
+                                <DataGridTextColumn Header="Знач. не сист."  
+                                                    Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
+                                <DataGridTextColumn Header="Собст. фон" 
+                                                    Binding="{Binding DeviceSelfBackground, StringFormat={}{0:E3}}" />
+                                <DataGridTextColumn Header="Колич."  
+                                                    Binding="{Binding EventCount}"/>
+                                <DataGridTextColumn Header="Имп/сек"  
+                                                    Binding="{Binding ImpulsesEventValue, StringFormat={}{0:n3}}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -251,7 +322,8 @@
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <materialDesign:Card Margin="5" Padding="1">
+                    <materialDesign:Card Margin="5" 
+                                         Padding="1">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>

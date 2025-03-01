@@ -28,7 +28,10 @@
     </Window.DataContext>
     
     <Grid>
-        <Border Background="{DynamicResource MaterialDesignPaper}" CornerRadius="5" BorderBrush="#424242" BorderThickness="1">
+        <Border Background="{DynamicResource MaterialDesignPaper}" 
+                CornerRadius="5" 
+                BorderBrush="#424242" 
+                BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
@@ -42,14 +45,23 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0"></Grid>
+                    <Grid Grid.Column="0" />
 
                     <Grid Grid.Column="1">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Margin="0 0 5 0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <materialDesign:PackIcon Kind="MathCompass" Height="17" Width="17"/>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center">
+                            <TextBlock Margin="0 0 5 0" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"
+                                       Foreground="#FF424242">
+                                    <materialDesign:PackIcon Kind="MathCompass" 
+                                                             Height="17" 
+                                                             Width="17"/>
                             </TextBlock>
-                            <TextBlock Text="Отчет" FontSize="16"/>
+                            <TextBlock Text="Отчет" 
+                                       FontSize="16"
+                                       Foreground="#FF424242"/>
                         </StackPanel>
                     </Grid>
 
@@ -81,10 +93,13 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" x:Name="reportsDataGrid" Margin="0 0 0 5">
+                            <Grid Grid.Row="0" 
+                                  x:Name="reportsDataGrid" 
+                                  Margin="0 0 0 5">
                                 <ScrollViewer>
                                     <StackPanel Orientation="Vertical">
-                                        <Expander Header="Выбросы">
+                                        <Expander Header="Выбросы"
+                                                  Foreground="#FF424242">
                                             <DataGrid x:Name="blowoutReportDataGrid" 
                                                       ItemsSource="{Binding BlowoutBindigCollection}"
                                                       IsReadOnly="True"
@@ -96,18 +111,27 @@
                                                       CanUserResizeRows="False">
 
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                                    <DataGridTextColumn Header="Расход" Binding="{Binding Channel.ChannelConsumption}" />
-                                                    <DataGridTextColumn Header="Бк"  Binding="{Binding BlowoutSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Кл"  Binding="{Binding BlowoutNotSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="SID" 
+                                                                        Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" 
+                                                                        Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" 
+                                                                        Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Расход" 
+                                                                        Binding="{Binding Channel.ChannelConsumption}" />
+                                                    <DataGridTextColumn Header="Бк"  
+                                                                        Binding="{Binding BlowoutSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Кл"  
+                                                                        Binding="{Binding BlowoutNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  
+                                                                        Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  
+                                                                        Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Expander>
-                                        <Expander Header="Выбросы по категориям">
+                                        <Expander Header="Выбросы по категориям"
+                                                  Foreground="#FF424242">
                                             <DataGrid x:Name="categoryReportDataGrid" 
                                                       ItemsSource="{Binding CategoryBlowoutBindingCollection}"
                                                       IsReadOnly="True"
@@ -119,13 +143,17 @@
                                                       CanUserResizeRows="False">
 
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn Header="Имя" Binding="{Binding ChannelName}" />
-                                                    <DataGridTextColumn Header="Сист. знач"  Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Имя" 
+                                                                        Binding="{Binding ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач"  
+                                                                        Binding="{Binding SystemEventValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  
+                                                                        Binding="{Binding NotSystemEventValue, StringFormat={}{0:E3}}"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Expander>
                                         <Expander Header="Спец. контроль" 
+                                                  Foreground="#FF424242"
                                                   IsExpanded="True">
                                             <DataGrid x:Name="specialControlReportDataGrid" 
                                                       ItemsSource="{Binding SpecialControlBindingCollection}"
@@ -138,18 +166,27 @@
                                                       CanUserResizeRows="False">
 
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                                    <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="SID" 
+                                                                        Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" 
+                                                                        Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" 
+                                                                        Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач."  
+                                                                        Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Размерн."  
+                                                                        Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  
+                                                                        Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  
+                                                                        Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  
+                                                                        Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Expander>
-                                        <Expander Header="Йодный участок">
+                                        <Expander Header="Йодный участок"
+                                                  Foreground="#FF424242">
                                             <DataGrid x:Name="iodineReportDataGrid" 
                                                       ItemsSource="{Binding IodineBindingCollection}"
                                                       IsReadOnly="True"
@@ -161,14 +198,22 @@
                                                       CanUserResizeRows="False">
 
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn Header="SID" Binding="{Binding Channel.ServerId}" />
-                                                    <DataGridTextColumn Header="CID" Binding="{Binding Channel.ChannelId}" />
-                                                    <DataGridTextColumn Header="Имя" Binding="{Binding Channel.ChannelName}" />
-                                                    <DataGridTextColumn Header="Сист. знач."  Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Размерн."  Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Не сист. знач."  Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
-                                                    <DataGridTextColumn Header="Начало"  Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
-                                                    <DataGridTextColumn Header="Конец"  Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="SID" 
+                                                                        Binding="{Binding Channel.ServerId}" />
+                                                    <DataGridTextColumn Header="CID" 
+                                                                        Binding="{Binding Channel.ChannelId}" />
+                                                    <DataGridTextColumn Header="Имя" 
+                                                                        Binding="{Binding Channel.ChannelName}" />
+                                                    <DataGridTextColumn Header="Сист. знач."  
+                                                                        Binding="{Binding AverageSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Размерн."  
+                                                                        Binding="{Binding Channel.Unit, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Не сист. знач."  
+                                                                        Binding="{Binding AverageNotSystemValue, StringFormat={}{0:E3}}"/>
+                                                    <DataGridTextColumn Header="Начало"  
+                                                                        Binding="{Binding FactStartReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
+                                                    <DataGridTextColumn Header="Конец"  
+                                                                        Binding="{Binding FactEndReportDate, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Expander>

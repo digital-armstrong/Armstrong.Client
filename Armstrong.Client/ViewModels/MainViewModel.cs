@@ -72,7 +72,12 @@ namespace Armstrong.Client.ViewModels
         public Axis[] XAxes { get; set; } = {
             new Axis
             {
-                Labeler = (double value) => new DateTime((long)value).ToString("HH:mm:ss"),
+                Labeler = value => {
+                    if (value < DateTime.MinValue.Ticks || value > DateTime.MaxValue.Ticks)
+                        return string.Empty;
+
+                    return new DateTime((long)value).ToString("HH:mm:ss");
+                },
                 LabelsPaint = new SolidColorPaint(SKColors.Black),
 
                 UnitWidth = TimeSpan.FromHours(1).Ticks,

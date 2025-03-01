@@ -22,7 +22,12 @@ namespace Armstrong.Client.Utilits
         {
             new Axis
             {
-                Labeler = value => new DateTime((long) value).ToString("HH:mm:ss"),
+                Labeler = value => {
+                    if (value < DateTime.MinValue.Ticks || value > DateTime.MaxValue.Ticks)
+                        return string.Empty;
+
+                    return new DateTime((long)value).ToString("HH:mm:ss");
+                },
                 LabelsPaint = new SolidColorPaint(SKColors.White),
 
                 UnitWidth = TimeSpan.FromHours(1).Ticks,
