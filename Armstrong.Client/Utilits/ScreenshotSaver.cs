@@ -15,7 +15,6 @@ namespace Armstrong.Client.Utilits
             public static int Medium => 85;
             public static int Low => 50;
         }
-        private static SKColor Black => SKColor.Parse("#FF303030");
         private static string FileName => $"Export_{DateTime.Now.Ticks}.png";
 
         public static void SavePng(CartesianChart chartObject)
@@ -29,10 +28,9 @@ namespace Armstrong.Client.Utilits
                 {
                     Width = 1920,
                     Height = 1080,
-                    Background = Black,
 
                     LegendPosition = LegendPosition.Top,
-                    LegendTextPaint = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.White)
+                    LegendTextPaint = new LiveChartsCore.SkiaSharpView.Painting.SolidColorPaint(SKColors.Black)
                 };
 
                 skChart.SaveImage(path: path, quality: Quality.Hight);

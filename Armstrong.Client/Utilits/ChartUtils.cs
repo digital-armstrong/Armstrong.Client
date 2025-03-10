@@ -28,7 +28,7 @@ namespace Armstrong.Client.Utilits
 
                     return new DateTime((long)value).ToString("HH:mm:ss");
                 },
-                LabelsPaint = new SolidColorPaint(SKColors.White),
+                LabelsPaint = new SolidColorPaint(SKColors.Black),
 
                 UnitWidth = TimeSpan.FromHours(1).Ticks,
                 MinStep = TimeSpan.FromSeconds(1).Ticks
@@ -41,7 +41,7 @@ namespace Armstrong.Client.Utilits
                 SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
                 IsVisible = false,
                 Labeler = value => value.ToString("E3"),
-                LabelsPaint = new SolidColorPaint(SKColors.White)
+                LabelsPaint = new SolidColorPaint(SKColors.Black)
             },
 
             new Axis
@@ -49,7 +49,7 @@ namespace Armstrong.Client.Utilits
                 SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
                 IsVisible= false,
                 Labeler = value => value.ToString("E3"),
-                LabelsPaint = new SolidColorPaint(SKColors.AntiqueWhite),
+                LabelsPaint = new SolidColorPaint(SKColors.DarkGreen),
                 Position = LiveChartsCore.Measure.AxisPosition.End
             },
 
@@ -58,7 +58,7 @@ namespace Armstrong.Client.Utilits
                 SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
                 IsVisible = false,
                 Labeler = value => value.ToString("E3"),
-                LabelsPaint = new SolidColorPaint(SKColors.FloralWhite),
+                LabelsPaint = new SolidColorPaint(SKColors.DarkOrange),
                 Position = LiveChartsCore.Measure.AxisPosition.End
             },
 
@@ -67,7 +67,7 @@ namespace Armstrong.Client.Utilits
                 SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 0.3f),
                 IsVisible = false,
                 Labeler = value => value.ToString("E3"),
-                LabelsPaint = new SolidColorPaint(SKColors.FloralWhite),
+                LabelsPaint = new SolidColorPaint(SKColors.DarkOrange),
                 Position = LiveChartsCore.Measure.AxisPosition.End
             }
         };
@@ -81,7 +81,9 @@ namespace Armstrong.Client.Utilits
         {
             var axisCollection = new ObservableCollection<Axis>();
 
-            foreach (var _x in XAxis)
+            Axis[] xAxis = XAxis;
+
+            foreach (var _x in xAxis)
             {
                 axisCollection.Add(_x);
             }
@@ -93,7 +95,9 @@ namespace Armstrong.Client.Utilits
         {
             var axisCollection = new ObservableCollection<Axis>();
 
-            foreach (var _y in YAxis)
+            Axis[] yAxis = YAxis;
+
+            foreach (var _y in yAxis)
             {
                 axisCollection.Add(_y);
             }
